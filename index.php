@@ -98,21 +98,198 @@
             </div>
             <div class="landing-posts">
                 <div class="post">
-                    <div class="profile">
+                    <div class="post-header">
                         <div class="avatar"></div>
-                        <div class="profile-content">
-                            <div class="profile-name"></div>
-                            <div class="profile-time"></div>
+                        <div class="post-header-content">
+                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-time">il y a 2 jours</div>
+
                         </div>
                     </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
+                            odit eius nam eligendi.
+                        </p>
+                    </div>
+                    <div class="icone">
+                        <div class="like"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" sp stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart-icon lucide-heart">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg> <span>2</span>
+                        </div>
+                        <div class="commenter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle">
+                                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                            </svg>
+                            <span>2</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar"></div>
+                        <div class="post-header-content">
+                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-time">il y a 2 jours</div>
+
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
+                            odit eius nam eligendi.
+                        </p>
+                    </div>
+                    <div class="icone">
+                        <div class="like"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" sp stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart-icon lucide-heart">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg> <span>2</span>
+                        </div>
+                        <div class="commenter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle">
+                                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                            </svg>
+                            <span>2</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar"></div>
+                        <div class="post-header-content">
+                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-time">il y a 2 jours</div>
+
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
+                            odit eius nam eligendi.
+                        </p>
+                    </div>
+                    <div class="icone">
+                        <div class="like"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" sp stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart-icon lucide-heart">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg> <span>2</span>
+                        </div>
+                        <div class="commenter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle">
+                                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                            </svg>
+                            <span>2</span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="post">
+                    <div class="post-header">
+                        <div class="avatar"></div>
+                        <div class="post-header-content">
+                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-time">il y a 2 jours</div>
+
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
+                            odit eius nam eligendi.
+                        </p>
+                    </div>
+                    <div class="icone">
+                        <div class="like"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" sp stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart-icon lucide-heart">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg> <span>2</span>
+                        </div>
+                        <div class="commenter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-message-circle-icon lucide-message-circle">
+                                <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                            </svg>
+                            <span>2</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
         </div>
     </section>
-
-
     <!-- END EXPLORER -->
+
+    <!-- START ASSOCIATION -->
+    <section class="association">
+        <div class="container">
+            <div class="titre">
+                <h2>Associations</h2>
+                <p>Rejoignez ces Associations qui collaborent déjà sur YADFYAD</p>
+            </div>
+            <div class="slides">
+                <div class="photo-profil">
+                    <div class="avatar"><img src="https://placehold.co/100" alt="profile"></div>
+                    <span>association</span>
+                </div>
+                <div class="photo-profil">
+                    <div class="avatar"></div>
+                    <span>association</span>
+                </div>
+                <div class="photo-profil">
+                    <div class="avatar"></div>
+                    <span>association</span>
+                </div>
+                <div class="photo-profil">
+                    <div class="avatar"></div>
+                    <span>association</span>
+                </div>
+                <div class="photo-profil">
+                    <div class="avatar"></div>
+                    <span>association</span>
+                </div>
+                <div class="photo-profil">
+                    <div class="avatar"></div>
+                    <span>association</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END ASSOCIATION -->
+
+    <!-- START REJOINDRE -->
+    <section class="rejoindre">
+        <div class="container">
+            <div class="titre">
+                <h2>Prêt à rejoindre la communauté?</h2>
+                <p>Inscrivez votre association dès aujourd'hui et commencez à collaborer avec d'autres organisations
+                    partageant les mêmes valeurs.</p>
+            </div>
+            <div class="button">
+                <a href="#">S'inscrire gratuitement </a>
+            </div>
+        </div>
+    </section>
+    <!-- END REJOINDRE -->
     <script src="script.js"></script>
 </body>
 

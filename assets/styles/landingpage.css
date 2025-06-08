@@ -28,7 +28,7 @@ a{
 :root{
     --mainColor:#0048A6;
     --buttonColor:#267CF4;
-    --lightGrey:#71717A;
+    --lightGrey:#71717aaf;
 }
 section{
    width: 100%;
@@ -139,23 +139,116 @@ section .containe{
 .landing-posts{
     width: 100%;
     display: grid;
-    grid-template-rows: auto;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
     margin-top: 20px;
+    justify-items: center;
+    gap: 20px;
 
 }
 
 .post{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: auto;
   height: 225px;
   border: 1px solid var(--lightGrey);
   border-radius: 12px;
+  padding: 20px;
 }
-.profile{
-    width: 80px;
-    height: 80px;
+.post-header{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.avatar{
+    width: 60px;
+    height: 60px;
     border: 0.4px solid black;
     border-radius: 50%;
+}
+.post-header-content .post-header-name{
+    font-weight: 600;
+    font-size: 16px;
+
+}
+.post-header-content .post-header-time{
+    font-size: 14px;
+    font-weight:400;
+    color:var(--lightGrey)
+}
+.description{
+    display: flex;
+    flex:1;
+}
+.description p{
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+}
+.icone{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+   
+}
+.like{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.commenter{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* ASSOCIATIONS */
+
+section.association{
+    margin-top: 3%;
+}
+.association .titre{
+    text-align: center;
+}
+.slides{
+    margin: 30px 0;
+    display: flex;
+    gap: 162px;
+}
+.slides .photo-profil{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+.avatar{
+    overflow:hidden;
+}
+.avatar img{
+ width:100%;
+}
+
+/* REJOINDRE */
+section.rejoindre{
+    background-color: #00aeff;
+    padding: 3% 0;
+    
+}
+.rejoindre .titre{
+  text-align: center;
+  min-width: 675px;
+}
+.button{
+   padding:3% 30%;
+}
+.rejoindre a{
+    color: white;
+    width: fit-content;
+    display: block;
+    background-color:green;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 300;
+    border-radius: 8px;
 }
