@@ -65,8 +65,10 @@
                     <input type="text" id="description" name="description" required>
 
                     <input type="submit" value="S'inscrire">
+
+                    <div class="question">Vous avez déjà un compte? <a href=" #">Connectez-vous</a></div>
+
                 </form>
-                <div>Vous avez déjà un compte? <a href="#">Connectez-vous</a></div>
             </div>
         </div>
     </section>

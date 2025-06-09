@@ -169,3 +169,54 @@ span.center {
 .question a {
    color: green;
 }
+
+
+/* =========CONNEXION======== */
+
+.connexion{
+width: 100vw;
+margin: 100px 0;
+
+}
+.title h2{
+   font-size: 24px;
+   font-weight: 600;
+   letter-spacing: -0.6px;
+
+}
+.title p{
+   font-size: 14px;
+   font-weight: 300;
+   color: #71717A;
+   margin: auto;
+
+}
+.info{
+   display: flex;
+    align-items: center;
+    gap: 30px;
+    justify-content: center;
+    box-shadow: -20px 9px 81px 0px #efeaea2e;
+    margin: 34px 0;
+   }
+   .connecte {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 3px -4px 8px 0px grey;
+      padding: 20px;
+   }
+   .info form{
+      display: flex;
+    flex-direction: column;
+    gap:15px;
+   }
+   .connecte label{
+      font-size: 14px;
+      font-weight: 300;
+   }
+   .connecte input {
+      padding: 9px;
+      border: 0.5px solid lightgrey;
+      border-radius: 5px;
+   }
