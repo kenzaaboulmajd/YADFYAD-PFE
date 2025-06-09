@@ -279,17 +279,69 @@
     <!-- START REJOINDRE -->
     <section class="rejoindre">
         <div class="container">
-            <div class="titre">
+            <div class="info">
                 <h2>Prêt à rejoindre la communauté?</h2>
                 <p>Inscrivez votre association dès aujourd'hui et commencez à collaborer avec d'autres organisations
                     partageant les mêmes valeurs.</p>
             </div>
-            <div class="button">
+            <div class="boutton">
                 <a href="#">S'inscrire gratuitement </a>
             </div>
         </div>
     </section>
     <!-- END REJOINDRE -->
+
+    <!-- START FOOTER -->
+    <footer>
+        <div class="container">
+
+            <div class="footer-link">
+                <div class="logo">
+                    <img src="assets/images/logo.png" alt="LOGO yadfyad">
+                    <p>Plateforme collaborative pour les associations au Maroc.</p>
+                </div>
+                <div class="column">
+                    <h3>PLATEFORME</h3>
+                    <ul>
+                        <li><a href="#">Problèmes</a></li>
+                        <li><a href="#">Activités </a></li>
+                        <li><a href="#"> Expériences</a></li>
+                        <li><a href="#">Associations </a></li>
+
+                    </ul>
+                </div>
+
+                <div class="column">
+                    <h3>Ressources</h3>
+                    <ul>
+                        <li><a href="#">Guide d'utilisation</a></li>
+                        <li><a href="#">FAQ </a></li>
+                        <li><a href="#"> Blog</a></li>
+                        <li><a href="#"> Événements</a></li>
+
+                    </ul>
+                </div>
+
+                <div class="column">
+                    <h3>A PROPOS</h3>
+                    <ul>
+                        <li><a href="#">Notre mission </a></li>
+                        <li><a href="#"> Equipe</a></li>
+                        <li><a href="#"> Contact</a></li>
+                        <li><a href="#"> Confidentialité</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+
+            &copy; 2025 YADFYAD.Tous droits reveser.
+
+        </div>
+    </footer>
+    <!-- END FOOTER -->
     <script src="script.js"></script>
 </body>
 

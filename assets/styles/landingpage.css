@@ -76,6 +76,7 @@ section .containe{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2%;
 }
 .title h2{
     font-size: 48px;
@@ -119,10 +120,12 @@ section .containe{
  }
 
  /* =====start explorer =====*/
+
 .explorer .titre{
     width: 100%;
      display: block;
     text-align: center;
+    padding: 2%;
 }
 .titre h2{
     font-size: 48px;
@@ -132,7 +135,7 @@ section .containe{
 } 
 .titre p{
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 300;
     color: var(--lightGrey);
     margin: auto;
 }
@@ -210,6 +213,7 @@ section.association{
 }
 .association .titre{
     text-align: center;
+    padding: 2%;
 }
 .slides{
     margin: 30px 0;
@@ -232,16 +236,31 @@ section.association{
 /* REJOINDRE */
 section.rejoindre{
     background-color: #00aeff;
-    padding: 3% 0;
+   
     
 }
-.rejoindre .titre{
-  text-align: center;
-  min-width: 675px;
+.rejoindre .info{
+    text-align: center;
+    padding: 54px 337px;
 }
-.button{
+.info h2{
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -2.4px;
+    margin: auto;
+    color:white;
+}
+.info p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--lightGrey);
+    margin: auto;
+    color:whit;
+}
+.boutton{
    padding:3% 30%;
 }
+
 .rejoindre a{
     color: white;
     width: fit-content;
@@ -252,3 +271,45 @@ section.rejoindre{
     font-weight: 300;
     border-radius: 8px;
 }
+
+/* START FOOTER  */
+footer{
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-bottom:0 ;
+    
+  }
+  .logo p{
+    color: var(--lightGrey);
+    font-size: 14px;
+  }
+  footer .footer-link{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 40px;
+   
+  }
+  .column ul{
+display: flex;
+flex-direction: column;
+gap: 20px;
+list-style: none;
+padding: 0;
+  }
+  .column ul li a{
+    text-decoration: none;
+    color: var(--lightGrey);
+    
+}
+.copyright{
+    display: block;
+    border-top: 1px solid rgb(3, 3, 3);
+    text-align: center;
+    padding: 20px 0;
+}
+
+.column h3{
+    color: var(--lightGrey);
+}
+
