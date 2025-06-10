@@ -10,11 +10,7 @@
 </head>
 
 <body>
-    <div class="design">
-        <span class="left"></span>
-        <span class="right"></span>
-        <span class="center"> </span>
-    </div>
+   
     <!-- START HEADER -->
     <header>
         <div class=" container">
@@ -27,6 +23,11 @@
 
     <!-- START SECTION -->
     <section>
+    <div class="design">
+        <span class="left"></span>
+        <span class="right"></span>
+        <span class="center"> </span>
+
         <div class="container">
             <div class="links-boutons">
                 <a href="#">Association</a>
@@ -38,6 +39,7 @@
                     <br> d' autres associations solidaires
                 </p>
             </div>
+          
             <div class="information">
                 <form method="post" class="form-group">
                     <label for=" nom">Nom de l'association</label>
@@ -69,16 +71,16 @@
                     <div class="question">Vous avez déjà un compte? <a href=" #">Connectez-vous</a></div>
 
                 </form>
+                </div>
             </div>
         </div>
+       
     </section>
-    <footer>
-        <div class="copyright">
-
-            &copy; 2025 YADFYAD.Tous droits reveser.
-
-        </div>
-    </footer>
+<footer>
+<div class="copyright">
+    <p>&copy; 2025 YADFYAD. All rights reserved.</p>
+</div>
+</footer>
 </body>
 
 </html>
