@@ -103,6 +103,7 @@ header {
 .form-group input {
    padding: 10px;
    border: #71717a33 1px solid;
+   border-radius: 4px;
 }
 
 .form-group label {
@@ -175,7 +176,7 @@ span.center {
 
 .connexion{
 width: 100vw;
-margin: 100px 0;
+margin: 50px 0;
 
 }
 .title h2{
@@ -193,18 +194,20 @@ margin: 100px 0;
 }
 .info{
    display: flex;
-    align-items: center;
-    gap: 30px;
-    justify-content: center;
-    box-shadow: -20px 9px 81px 0px #efeaea2e;
-    margin: 34px 0;
+   align-items: center;
+   justify-content: center;
+   gap: 100px;
+   margin: 35px 0;
+   }
+   .picture img{
+      width: 600px;
    }
    .connecte {
       display: flex;
       flex-direction: column;
       gap: 20px;
       box-shadow: 3px -4px 8px 0px grey;
-      padding: 20px;
+      padding: 20px 70px; 
    }
    .info form{
       display: flex;
@@ -219,4 +222,13 @@ margin: 100px 0;
       padding: 9px;
       border: 0.5px solid lightgrey;
       border-radius: 5px;
+   }
+
+   input[type="submit"]{
+      background-color: var(--colorblue);
+      padding: 10px 60px;
+      width: max-content;
+      color: white;
+      margin: auto;
+      border: none
    }
