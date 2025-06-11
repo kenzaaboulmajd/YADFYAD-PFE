@@ -12,20 +12,22 @@
         }catch(Exception $e){
             echo'error'. $e->getMessage();
         }
-        $sql=$conn->prepare("SELECT * FROM utilisateurs WHERE email=:email");
+        $sql=$conn->prepare("SELECT * FROM utilisateur WHERE EMAIL=:email");
         $sql->execute([
             ':email'=> $email
         ]);
         if($users=$sql->fetch(PDO::FETCH_ASSOC)){
-            if(password_verify($mdps,$users["mot_de_passe"])){
-                $_SESSION["id"] = $users["utilisateur_id"];
+            if(password_verify($mdps,$users["MOT_DE_PASSE"])){
+                $_SESSION["email"] = $users["EMAIL"];
+    
                 header("location:dashbord.php");
             }
         }else{
-            echo "email ou Mmot de passe incorrect";
+            echo "email ou mot de passe incorrect";
         }
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

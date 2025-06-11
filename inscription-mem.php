@@ -4,24 +4,34 @@
         $db="mysql:host=localhost;dbname=yadfyad";
         $user="root";
         $pass="";
-        $name=$_POST['nom'];
+        $fullname= $_POST["nom"];
+        $nom = explode(" ", $fullname)[0];
+        $prenom= explode(" ", $fullname)[1];
         $email=$_POST['email'];
         $mdps=$_POST['mdps'];
         $confirmotdepasse=$_POST['confirmotdepasse'];
         $description=$_POST['description'];
-
+        $role=$_POST['role'];
+      if($role=="membre-association" ){
+          $type= 0;
+      }else{
+          $type= 1;
+        }
         try{
             $conn=new PDO ($db,$user,$pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
             echo 'error de cnx'.$e->getMessage();
         }
-        if(!empty($name) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description)){
+        if(!empty($nom) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description) && !empty($prenom)){
             $hash=password_hash($mdps,PASSWORD_DEFAULT);
-            $sql = $conn->prepare("INSERT INTO utilisateur (NOM, EMAIL, MOT_DE_PASSE) VALUES (:nom, :email, :mdps)");        $sql->execute([
-            ':nom' => $name,
+            $sql = $conn->prepare("INSERT INTO utilisateur (NOM,PRENOM,EMAIL, MOT_DE_PASSE, DESCRIPTION,TYPE_UTILISATEUR) VALUES (:nom,:prenom, :email, :mdps,:description,:type_utilisateur)");        $sql->execute([
+            ':nom' => $nom,
+            ':prenom' => $prenom,
             ':email'=> $email,
-            ':mdps'=> $hash
+            ':mdps'=> $hash,
+            ':description'=> $description,
+            ':type_utilisateur'=> $type
         ]);
         header('location:connexion.php');
         }else{
@@ -77,6 +87,7 @@
                     <option value="autre">Membre d'association</option>
                     <option value="association">visiteur</option>
                          </select>
+
                     <label for=" nom">Nom et prenom</label>
                     <input type="text" id="nom" name="nom" required>
 
