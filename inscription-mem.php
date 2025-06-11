@@ -4,7 +4,7 @@
         $db="mysql:host=localhost;dbname=yadfyad";
         $user="root";
         $pass="";
-        $name=$_POST['name'];
+        $name=$_POST['nom'];
         $email=$_POST['email'];
         $mdps=$_POST['mdps'];
         $confirmotdepasse=$_POST['confirmotdepasse'];
@@ -18,8 +18,7 @@
         }
         if(!empty($name) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description)){
             $hash=password_hash($mdps,PASSWORD_DEFAULT);
-        $sql=$conn->prepare("INSERT INTO utilisateurs (nom,prenom,email,mot_de_passe,type_utilisateur) VALUES (:nom,:email,:mdps)");
-        $sql->execute([
+            $sql = $conn->prepare("INSERT INTO utilisateur (NOM, EMAIL, MOT_DE_PASSE) VALUES (:nom, :email, :mdps)");        $sql->execute([
             ':nom' => $name,
             ':email'=> $email,
             ':mdps'=> $hash
