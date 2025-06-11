@@ -1,32 +1,37 @@
 <?php
     session_start();
     if($_SERVER["REQUEST_METHOD"]=="POST"){
-        $db="mysql:host=localhost;dbname=revision_system";
+        $db="mysql:host=localhost;dbname=yadfyad";
         $user="root";
         $pass="";
-        $name=$_POST['name'];
+        $name= $_POST["nom"];
         $email=$_POST['email'];
         $mdps=$_POST['mdps'];
-        $mconfirotdepasse=$_POST['mconfirotdepasse'];
-        $domaine=$_POST['domaine'];
-        $description=$_POST['description'];
+        $address=$_POST['adress'];
+        $numero=$_POST['numero'];
+        $confirmotdepasse=$_POST['confirmotdepasse'];
+        $info=$_POST['info'];
+       
+
         try{
             $conn=new PDO ($db,$user,$pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         }catch(PDOException $e){
             echo 'error de cnx'.$e->getMessage();
         }
-        if(!empty($name) && !empty($email) && !empty($mdps) && !empty($mconfirotdepasse) && !empty($domain) && !empty($description)){
+        if(!empty($nom) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description) && !empty($prenom)){
             $hash=password_hash($mdps,PASSWORD_DEFAULT);
-        $sql=$conn->prepare("INSERT INTO utilisateurs (nom,email,mot_de_passe,con) VALUES (:nom,:email,:mdps)");
-        $sql->execute([
-            ':nom' => $name,
+            $sql = $conn->prepare("INSERT INTO association (NOM,PRENOM,EMAIL, MOT_DE_PASSE, INFO,ADRESSSE, NUMERO_TELEPHOE) VALUES (:nom,:prenom, :email, :mdps,:info,:numero,:adresse)");        $sql->execute([
+            ':nom' => $nom,
+            ':prenom' => $prenom,
             ':email'=> $email,
-            ':mdps'=> $hash
+            ':mdps'=> $hash,
+            ':description'=> $description,
+            ':type_utilisateur'=> $type
         ]);
         header('location:connexion.php');
         }else{
-            echo'Veuillez entrer tt les donnÃ©es ';
+            echo'Veuillez entrer tout les donnees ';
         }}
 ?>
 <!DOCTYPE html>
