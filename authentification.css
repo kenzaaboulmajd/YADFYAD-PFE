@@ -129,6 +129,12 @@ section .design{
    font-size: 14px;
    font-weight: 400;
 }
+select.role{
+   WIDTH: 200PX;
+   PADDING: 10PX;
+   FONT-SIZE: 14PX;
+   FONT-WEIGHT: 600;
+}
 footer {
    width: 100%;
    height: 100px;

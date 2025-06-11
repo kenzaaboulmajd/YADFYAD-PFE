@@ -1,3 +1,31 @@
+<?php
+    session_start();
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+        $sdn="mysql:host=localhost;dbname=yadfyad";
+        $user="root";
+        $pass= "";
+        $email=$_POST["email"];
+        $mdps= $_POST['mdps'];
+        try{
+            $conn = new PDO($sdn, $user, $pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }catch(Exception $e){
+            echo'error'. $e->getMessage();
+        }
+        $sql=$conn->prepare("SELECT * FROM utilisateurs WHERE email=:email");
+        $sql->execute([
+            ':email'=> $email
+        ]);
+        if($users=$sql->fetch(PDO::FETCH_ASSOC)){
+            if(password_verify($mdps,$users["mot_de_passe"])){
+                $_SESSION["id"] = $users["utilisateur_id"];
+                header("location:dashbord.php");
+            }
+        }else{
+            echo "email ou Mmot de passe incorrect";
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +63,7 @@
                         <input type="email" id="email" name="email" required>
 
                         <label for="motdepasse">Mot de passe</label>
-                        <input type="password" id="motdepasse" name="motdepasse" required>
+                        <input type="password" id="mdps" name="mdps" required>
 
                         <div class="mtpo"> Mot de passe oublié</div>
 

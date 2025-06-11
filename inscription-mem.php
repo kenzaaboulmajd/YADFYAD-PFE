@@ -1,3 +1,34 @@
+<?php
+    session_start();
+    if($_SERVER["REQUEST_METHOD"]=="POST"){
+        $db="mysql:host=localhost;dbname=yadfyad";
+        $user="root";
+        $pass="";
+        $name=$_POST['name'];
+        $email=$_POST['email'];
+        $mdps=$_POST['mdps'];
+        $confirmotdepasse=$_POST['confirmotdepasse'];
+        $description=$_POST['description'];
+
+        try{
+            $conn=new PDO ($db,$user,$pass);
+            $conn->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        }catch(PDOException $e){
+            echo 'error de cnx'.$e->getMessage();
+        }
+        if(!empty($name) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description)){
+            $hash=password_hash($mdps,PASSWORD_DEFAULT);
+        $sql=$conn->prepare("INSERT INTO utilisateurs (nom,prenom,email,mot_de_passe,type_utilisateur) VALUES (:nom,:email,:mdps)");
+        $sql->execute([
+            ':nom' => $name,
+            ':email'=> $email,
+            ':mdps'=> $hash
+        ]);
+        header('location:connexion.php');
+        }else{
+            echo'Veuillez entrer tout les donnees ';
+        }}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,11 +41,11 @@
 </head>
 
 <body>
-    <div class="design">
+    <!-- <div class="design">
         <span class="left"></span>
         <span class="right"></span>
         <span class="center"> </span>
-    </div>
+    </div> -->
     <!-- START HEADER -->
     <header>
         <div class=" container">
@@ -40,6 +71,13 @@
             </div>
             <div class="information">
                 <form method="post" class="form-group">
+
+                <label for="role">Je suis :</label>
+                   <select name="role" id="role"  class="role"onchange="toggleFields()" required>
+                    <option value="">Choisissez...</option>
+                    <option value="autre">Membre d'association</option>
+                    <option value="association">visiteur</option>
+                         </select>
                     <label for=" nom">Nom et prenom</label>
                     <input type="text" id="nom" name="nom" required>
 
@@ -48,7 +86,7 @@
                     <input type="email" id="email" name="email" required>
 
                     <label for="motdepasse">Mot de passe</label>
-                    <input type="password" id="motdepasse" name="motdepasse" required>
+                    <input type="password" id="mdps" name="mdps" required>
 
                     <label for="confirmotdepasse">confirmer mot de passe</label>
                     <input type="password" id="confirmotdepasse" name="confirmotdepasse" required>
