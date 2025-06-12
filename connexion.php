@@ -20,7 +20,7 @@
             if(password_verify($mdps,$users["MOT_DE_PASSE"])){
                 $_SESSION["email"] = $users["EMAIL"];
     
-                header("location:dashbord.php");
+                header("location:actualite.php");
             }
         }else{
             echo "email ou mot de passe incorrect";
