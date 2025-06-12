@@ -40,9 +40,13 @@ header nav{
     display: flex;
     width: 100%;
     align-items: center;
+   height: 50px;
 }
 header nav .logo{
     width: 20%;
+}
+header nav .logo img{
+    height: 50PX;
 }
 header nav .link{
     width: 40%;
@@ -51,6 +55,13 @@ header nav .link ul{
      display: flex;
      justify-content: center;
      gap: 20px;
+}
+header nav .link ul li a {
+    display: block;
+    padding: 10px 0;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
 }
 header nav .icons{
     width: 40%;
@@ -130,7 +141,7 @@ nav .icone span{
 
     }
     
-/* // ====landig-page===/// */
+/* // ====pour nav bar de index.php-page===/// */
 header nav .button{
     width: 40%;
 
@@ -140,12 +151,14 @@ header nav .button ul{
     justify-content: end;
     gap: 3%;
 }
-header nav .button ul li a{
+header nav .button ul li a {
     display: block;
     background-color: var(--buttonColor);
-    padding: 0.5rem 1rem;
+    padding: 5PX 10PX;
+    border-radius: 4px;
+    font-size: 13px;
     color: white;
-    border-radius: 8px;
+    font-weight: 500;
 }
 header nav .button ul li a.white-button{
     background-color: white;

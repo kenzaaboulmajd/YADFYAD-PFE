@@ -1,0 +1,10 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # If the requested filename doesn't exist
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Try adding .php to the URL and rewrite it
+    RewriteRule ^([a-zA-Z0-9_-]+)$ $1.php [L]
+</IfModule>

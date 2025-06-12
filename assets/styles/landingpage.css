@@ -19,7 +19,7 @@ a{
 .container{
     width: 100%;
     padding-left:4%;
-    padding-right:3%;
+    padding-right:4%;
     margin-left: auto;
     margin-right: auto;
 
@@ -40,6 +40,12 @@ section{
 section.hero{
     background-image: linear-gradient(white, #c5e9fb);
     margin-top: 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 section .containe{
     width: 100%;
@@ -80,23 +86,22 @@ section .containe{
 }
 .title h2{
     font-size: 48px;
-    letter-spacing: -2.4;
-    font-family: 700;
-    margin: 10px;
+    letter-spacing: -2.4px;
+    font-weight: 600;
+    margin: auto;
 }
 .title p{
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 400;
     margin: auto;
-    color: var(--lightGrey);
+    color: var(--lightGrey);;
 }
 .carres{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(322px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 50px;
     text-align: left;
     margin: 38px 60px
-
 }
 
 .carres .column {
@@ -114,9 +119,8 @@ section .containe{
  }
  .carres .column p{
     margin: auto;
-    color: var(--lightGrey);
-    font-size: 16px;
-    font-weight: lighter;
+    color: #71717a;
+    font-size: 14px;
  }
 
  /* =====start explorer =====*/
@@ -125,11 +129,11 @@ section .containe{
     width: 100%;
      display: block;
     text-align: center;
-    padding: 2%;
+    padding: 15px;
 }
 .titre h2{
     font-size: 48px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -2.4px;
     margin: auto;
 } 
@@ -150,14 +154,14 @@ section .containe{
 }
 
 .post{
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: auto;
-  height: 225px;
-  border: 1px solid var(--lightGrey);
-  border-radius: 12px;
-  padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: auto;
+    height: 225px;
+    border: 1px solid #71717a54;
+    border-radius: 12px;
+    padding: 20px;
 }
 .post-header{
     display: flex;
@@ -186,7 +190,7 @@ section .containe{
 }
 .description p{
     font-weight: 400;
-    font-size: 16px;
+    font-size: 15px;
     margin: 0;
 }
 .icone{
@@ -209,16 +213,16 @@ section .containe{
 /* ASSOCIATIONS */
 
 section.association{
-    margin-top: 3%;
+    margin-top: 30px;
 }
 .association .titre{
     text-align: center;
-    padding: 2%;
+    padding: 15px;
 }
 .slides{
     margin: 30px 0;
     display: flex;
-    gap: 162px;
+    gap: 130px;
 }
 .slides .photo-profil{
     display: flex;
@@ -234,42 +238,41 @@ section.association{
 }
 
 /* REJOINDRE */
-section.rejoindre{
-    background-color: #00aeff;
-   
-    
-}
-.rejoindre .info{
-    text-align: center;
-    padding: 54px 337px;
+section.rejoindre {
+width: 100%;
+height: 380px;
+display: flex;
+position: relative;
+padding: 50PX 0 0 0;
+BACKGROUND: var(--buttonColor);
+ TEXT-ALIGN: center;
 }
 .info h2{
-    font-size: 48px;
-    font-weight: 700;
-    letter-spacing: -2.4px;
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -2px;
     margin: auto;
-    color:white;
-}
+    color: white;
+}  
 .info p {
-    font-size: 16px;
-    font-weight: 300;
-    color: var(--lightGrey);
+    width: 58%;
     margin: auto;
-    color:whit;
-}
-.boutton{
-   padding:3% 30%;
+    padding: 20px 0;
+    font-weight: 300; 
+    color: white;
+} 
+.rejoindre .boutton{
+    padding: 20PX 60px 0 0;
 }
 
 .rejoindre a{
-    color: white;
-    width: fit-content;
-    display: block;
-    background-color:green;
+    color: black;
+    background-color: #10B77F;
     padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 12PX;
+    font-weight: 500;
     border-radius: 8px;
+    TEXT-ALIGN: center;
 }
 
 /* START FOOTER  */
@@ -277,8 +280,6 @@ footer{
     width: 100%;
     height: auto;
     position: relative;
-    margin-bottom:0 ;
-    
   }
   .logo p{
     color: var(--lightGrey);
@@ -286,30 +287,33 @@ footer{
   }
   footer .footer-link{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 40px;
-   
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 20px;
+    padding: 25px 0;
+    margin: auto;
+    width: 100%;
+    color: var(--lightGrey);
   }
-  .column ul{
-display: flex;
-flex-direction: column;
-gap: 20px;
-list-style: none;
-padding: 0;
+  footer .footer-link .column ul{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
   }
-  .column ul li a{
+  footer .footer-link .column ul li a{
     text-decoration: none;
     color: var(--lightGrey);
     
 }
 .copyright{
     display: block;
-    border-top: 1px solid rgb(3, 3, 3);
+    border-top: 1px solid var(--lightGrey);
+    width: 100%;
     text-align: center;
     padding: 20px 0;
+    color: var(--lightGrey);
 }
-
-.column h3{
+footer .footer-link.column h3{
     color: var(--lightGrey);
 }
 
