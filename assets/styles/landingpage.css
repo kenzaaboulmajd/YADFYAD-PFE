@@ -17,9 +17,9 @@ a{
     color: black;
 }
 .container{
-    width: 100%;
-    padding-left:4%;
-    padding-right:4%;
+    width: 1400px;
+    padding-left:100px;
+    padding-right:100px;
     margin-left: auto;
     margin-right: auto;
 
@@ -76,6 +76,18 @@ section .containe{
     font-weight: 400;
     color: var(--lightGrey);
 }
+.rejoindre-button a{
+   color: white;
+    background-color: green;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    margin-top: 30px;
+}
 .title{
     width: 100%;
     display: flex;
@@ -98,7 +110,7 @@ section .containe{
 }
 .carres{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-gap: 50px;
     text-align: left;
     margin: 38px 60px
@@ -286,11 +298,11 @@ footer{
     font-size: 14px;
   }
   footer .footer-link{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    display: flex;
+    justify-content: space-between;
     gap: 20px;
     padding: 25px 0;
-    margin: auto;
+    
     width: 100%;
     color: var(--lightGrey);
   }

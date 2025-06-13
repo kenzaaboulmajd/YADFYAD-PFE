@@ -40,7 +40,7 @@ header nav{
     display: flex;
     width: 100%;
     align-items: center;
-   height: 50px;
+   height: 55px;
 }
 header nav .logo{
     width: 20%;
@@ -58,7 +58,7 @@ header nav .link ul{
 }
 header nav .link ul li a {
     display: block;
-    padding: 10px 0;
+    padding: 15px 0;
     color: black;
     font-size: 16px;
     font-weight: 500;
@@ -152,11 +152,11 @@ header nav .button ul{
     gap: 3%;
 }
 header nav .button ul li a {
-    display: block;
+      display: block;
     background-color: var(--buttonColor);
-    padding: 5PX 10PX;
+    padding: 7PX 18PX;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 15px;
     color: white;
     font-weight: 500;
 }

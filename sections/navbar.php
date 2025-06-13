@@ -2,7 +2,7 @@
     <div class="container">
         <nav>
             <div class="logo">
-                <img src="assets/images/logo.png" alt="YADFYAD-logo">
+                <img src="/YADFYAD-PFE/assets/images/logo.png" alt="YADFYAD-logo">
             </div>
             <div class="link">
                 <ul>

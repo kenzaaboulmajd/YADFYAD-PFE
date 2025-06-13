@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>YADFYAD</title>
+    <link rel="icon" href="assets/images/logo.png">
     <link rel="stylesheet" href="assets/styles/style.css">
     <link rel="stylesheet" href="assets/styles/landingpage.css">
 
@@ -19,7 +20,7 @@
 
 <body>
     <?php require_once "sections/landing-navbar.php";
- ?>
+    ?>
     <!-- START HERO -->
     <section class="hero">
         <div class=" container">
@@ -29,7 +30,9 @@
                     <p>YADFYAD connecte les association solidaires pour partager leurs <br>
                         besion et problemes leurs activites et s'entraider
                     </p>
+                    <div class="rejoindre-button"> <a href="inscription.php">Rejoindre la communauté</a></div>
                 </div>
+
                 <div class="img">
                     <img src="imge-hero-removebg-preview.png" alt="image-hero">
                     <span></span>
@@ -42,7 +45,7 @@
     <!-- END HERO -->
 
     <!-- START A  PROPOS-->
-    <section>
+    <section id="propos">
         <div class="container">
             <div class="title">
                 <h2> A propos</h2>
@@ -58,8 +61,10 @@
                             <circle cx="10" cy="8" r="5" />
                             <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
                         </svg></span>
-                    <h3>Créez vitre profil</h3>
-                    <p>Présenter votre association, sa mission et ses activités pour vous faire connaître.</p>
+                    <h3>Créez votre profil</h3>
+                    <p>Présentez votre association, sa
+                        mission et ses activités pour vous
+                        faire connaître.</p>
                 </div>
                 <div class="column two">
                     <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -69,8 +74,10 @@
                             <circle cx="10" cy="8" r="5" />
                             <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
                         </svg></span>
-                    <h3>Créez vitre profil</h3>
-                    <p>Présenter votre association, sa mission et ses activités pour vous faire connaître.</p>
+                    <h3>Partagez vos besoins</h3>
+                    <p>Publiez vos problèmes, besoins
+                        ou réussites pour informer la
+                        communauté.</p>
                 </div>
                 <div class="column three">
                     <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -80,8 +87,10 @@
                             <circle cx="10" cy="8" r="5" />
                             <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" />
                         </svg></span>
-                    <h3>Créez vitre profil</h3>
-                    <p>Présenter votre association, sa mission et ses activités pour vous faire connaître.</p>
+                    <h3>Entraidez-vous</h3>
+                    <p>Commentez, aimez et partagez
+                        pour soutenir d'autres
+                        associations et créer des liens.</p>
                 </div>
             </div>
         </div>
@@ -90,7 +99,7 @@
     <!-- END A  PROPOS-->
 
     <!-- START EXPLORER -->
-    <section class="explorer">
+    <section id="explorer" class="explorer">
         <div class=" container">
             <div class="titre">
                 <h2>Explorer les associations</h2>
@@ -240,7 +249,7 @@
     <!-- END EXPLORER -->
 
     <!-- START ASSOCIATION -->
-    <section class="association">
+    <section class="association" id="associations">
         <div class="container">
             <div class="titre">
                 <h2>Associations</h2>
@@ -285,7 +294,7 @@
                     partageant les mêmes valeurs.</p>
             </div>
             <div class="boutton">
-                <a href="#">S'inscrire gratuitement </a>
+                <a href="inscription.php">S'inscrire gratuitement </a>
             </div>
         </div>
     </section>

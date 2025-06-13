@@ -73,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="container">
             <div class="links-boutons">
-                <a href="#">Association</a>
-                <a href="#"> Membre</a>
+                <a href="inscription.php">Association</a>
+                <a href="inscription-mem.php" class="button-active"> Membre solidaire</a>
             </div>
             <div class="description">
                 <h2>Créer un compte</h2>
@@ -90,8 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" id="nom" name="nom" required>
 
                     <!-- Preuve (facultatif ici car pas utilisé en PHP) -->
-                    <label for="preuve">Preuve de l’association</label>
-                    <input type="text" id="preuve" name="preuve">
+                    <label>Preuve de l’association</label>
+                    <label for="preuve" class="custom-file-upload">Télécharger les preuves de l'association
+                        <div class="custom-button-upload">file du fichier</div>
+                    </label>
+                    <input type="file" id="preuve" name="preuve" hidden>
 
                     <!-- Adresse -->
                     <label for="adresse">Adresse</label>
@@ -125,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <input type="submit" value="S'inscrire">
 
-                    <div class="question">Vous avez déjà un compte? <a href=" #">Connectez-vous</a></div>
+                    <div class="question">Vous avez déjà un compte? <a href="connexion.php" class="white-button" ">Connectez-vous</a></div>
 
                 </form>
             </div>
@@ -134,10 +137,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </section>
     <footer>
-        <div class="copyright">
-            <p>&copy; 2025 YADFYAD. All rights reserved.</p>
-        </div>
-    </footer>
+        <div class=" copyright">
+                            <p>&copy; 2025 YADFYAD. All rights reserved.</p>
+                    </div>
+                    </footer>
 </body>
 
 </html>

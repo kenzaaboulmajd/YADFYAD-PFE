@@ -11,20 +11,19 @@
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="../assets/styles/style.css">
 </head>
 
 <body>
     <!-- NAVBARE -->
-    <?php require_once "sections/navbar.php";
- ?>
+    <?php require_once "../sections/navbar.php"; ?>
     <!-- START section -->
     <section>
 
         <div class="direction">
-            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                    stroke="#7d7d7d" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-arrow-left-icon lucide-arrow-left">
+            <a href="../actualite.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="#7d7d7d" stroke-width="1" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-arrow-left-icon lucide-arrow-left">
                     <path d="m12 19-7-7 7-7" />
                     <path d="M19 12H5" />
                 </svg></a>

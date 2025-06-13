@@ -39,17 +39,11 @@ header {
 }
 section{
    width: 100%;
-   height:1020PX;
    margin: 0;
    padding: 0;
    position: relative;  
 }
-section .design{
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   position: absolute;
-}
+
 
 .links-boutons {
    display: flex;
@@ -59,31 +53,34 @@ section .design{
    gap: 20px;
    margin-top: 30px;
    border-radius: 4px;
-   position: absolute;
-   top: 0;
+ ;
 }
 
 .links-boutons a {
-   color: var(--colorblue);
-   padding: 6px 93px;
-   border: 1px solid var(--colorblue);
-   font-size: 14px;
-   font-weight: 400;
-   border-radius: 4px;
+   display: block;
+    color: var(--colorblue);
+    padding: 10px 80px;
+    border: 1px solid var(--colorblue);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.links-boutons a.button-active {
+   background-color: var(--colorblue);
+   color: white;
 }
 
 .description {
    display: flex;
    flex-direction: column;
    padding: 20px;
-   POSITION: absolute;
-   top: 50px;
+ 
 }
 
 .description h2 {
 
    padding-left: 30px;
-   font-size: 24px;
+   font-size: 28px;
    font-weight: 600;
    letter-spacing: -0.6px;
 }
@@ -103,10 +100,7 @@ section .design{
    box-sizing: border-box;
    padding: 20px;
    box-shadow: 0px 0.5px 6px 0px rgba(128, 128, 128, 0.748);
-   position: absolute;
-   top: 190px;
-   left: 50%;
-   transform: translateX(-50%);
+ 
 }
 .form-group {
    display: flex;
@@ -114,20 +108,49 @@ section .design{
    gap: 15px;
    padding: 20px;
    width: 100%;
-   box-sizing: border-box;
-
 }
 
 .form-group input {
-   width: 100%;
-   padding: 10px;
-   border: #71717a33 1px solid;
-   border-radius: 4px;
+      width: 100%;
+    padding: 12px;
+    border: #71717a33 1px solid;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .form-group label {
-   font-size: 14px;
-   font-weight: 400;
+   font-size: 15px;
+   font-weight: 500;
+}
+.form-group .custom-file-upload {
+   position: relative;
+   display: inline-block;
+   width: 100%;
+   height: 50px;
+   overflow: hidden;
+   border-radius: 8px;
+   background-color: transparent;
+   border: 1px solid #71717a33;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 0 12px;
+   font-size: 16px;
+   color: #71717a;
+   font-weight: normal;
+   cursor: pointer;
+}
+.form-group .custom-button-upload {
+   cursor: pointer;
+   width: 200px;
+   background-color: #2eb450;
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   border-radius: 8px;
+   text-align: center;
+   line-height: 1;
 }
 select.role{
    WIDTH: 200PX;
@@ -135,17 +158,6 @@ select.role{
    FONT-SIZE: 14PX;
    FONT-WEIGHT: 600;
 }
-footer {
-   width: 100%;
-   height: 100px;
-   background-color: #f8f9fa;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   position: relative;
-}
-
-
 
 span{
    display: block;
@@ -157,6 +169,7 @@ span{
 .question {
    margin: auto;
    font-weight: 100;
+   margin: 10px auto;
 }
 
 .question a {
@@ -169,7 +182,8 @@ footer {
    display: flex;
    align-items: center;
    justify-content: center;
-   position: relative;
+   margin-top: 20px;
+ 
 }
 /* .copyright {
    margin-top: 21px;
@@ -188,9 +202,10 @@ margin: 50px 0;
 
 }
 .title h2{
-   font-size: 24px;
-   font-weight: 600;
-   letter-spacing: -0.6px;
+     font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    margin-bottom: 10px;
 
 }
 .title p{
@@ -213,7 +228,7 @@ margin: 50px 0;
    .connecte {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 27px;
       box-shadow: 3px -4px 8px 0px grey;
       padding: 20px 70px; 
    }
@@ -223,20 +238,23 @@ margin: 50px 0;
     gap:15px;
    }
    .connecte label{
-      font-size: 14px;
-      font-weight: 300;
+      font-size: 16px;
+      font-weight: 400;
    }
    .connecte input {
-      padding: 9px;
-      border: 0.5px solid lightgrey;
-      border-radius: 5px;
+    padding: 10px;
+    border: 0.5px solid lightgrey;
+    border-radius: 5px;
+    font-size: 20px;
    }
 
    input[type="submit"]{
-      background-color: var(--colorblue);
-      padding: 10px 60px;
-      width: max-content;
-      color: white;
-      margin: auto;
-      border: none
+         background-color: var(--colorblue);
+    padding: 9px 38px;
+    width: max-content;
+    color: white;
+    margin: auto;
+    border: none;
+    font-size: 17px;
+    border-radius: 8px;
    }
