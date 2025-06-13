@@ -1,0 +1,122 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+   
+ }
+ body{
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+a{
+    color: black;
+}
+.container{
+   width: 1240px;
+    padding-left:60px;
+    padding-right:60px;
+    margin-left: auto;
+    margin-right: auto;  
+}
+:root{
+    --mainColor:#0048A6;
+    --buttonColor:#267CF4;
+    --lightGrey:#71717aaf;
+    --backgoundcolor:#f1f5f9;
+    --textColor:#000000;
+    --colorparagraph:#6b7280;
+}
+.head-profil {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+.photo-profil {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--lightGrey);
+}
+.script-profil{
+  width: 700px;
+  padding: 20px 0;
+  flex: 1;
+}
+.script-profil h2{
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--textColor);
+    margin-bottom: 10px;
+}
+.script-profil p{
+    font-size: 16px;
+    color: var(--colorparagraph);
+    line-height: 1.5;
+}
+.lieu{
+      display: flex;
+    align-items: center;
+    color: grey;
+}
+.bouttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+.bouttons a {
+   display: block;
+   width: fit-content;
+   background-color: #059669;
+   padding: 8px 10px;
+  margin: 10px auto;
+   color: white;
+   border-radius: 5px;
+   text-align: center;
+   font-weight: 500;
+   font-size: 15px;
+}
+.nombre{
+  display: flex;
+  align-items: center;
+  /* gap: 2px; */
+}
+.nombre .abonnes .membres {
+  width: 100px;
+   border: 1px solid var(--lightGrey);
+}
+.nombre span {
+    font-size: 16px;
+    color: var(--textColor);
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.abonnes {
+    border: 2px solid lightgray;
+    padding: 8px 74px;
+    border-radius: 9px 0 0 9px;
+}
+.membres {
+    border: 2px solid lightgray;
+    padding: 8px 74px;
+   border-radius: 0 9px 9px 0;
+}
+.links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* gap: 258px; */
+    /* border: 2px solid lightgray; */
+    border-radius: 8px;
+    background: #f1f5f9;
+    box-shadow: 2px 4PX 5PX 0PX rgb(128 128 128 / 24%);
+}
+.links li {
+        padding: 11px 144px;
+}
