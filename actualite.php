@@ -110,6 +110,7 @@
                                         </svg>
                                     </div>
                                     <div class="valeur">3</div>
+                                    <div class="valeur">3</div>
                                 </div>
                                 <div class="post-interaction-element">
                                     <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
