@@ -1,5 +1,18 @@
 <?php
+ini_set('display_errors', 'on');
 session_start();
+
+$errors = array(
+"name" => "",
+"email" => "",
+"mdps" => "",
+"confirmotdepasse" => "",
+"info" => "",
+"adresse" => "",
+"numero" => "",
+"domaine" => "",
+);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db = "mysql:host=localhost;dbname=yadfyad";
     $user = "root";
@@ -20,12 +33,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo 'error de cnx' . $e->getMessage();
-    }
+    }    
 
 
-    if (!empty($name) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($info) && !empty($adresse) && !empty($numero) && !empty($domaine)) {
+    if (empty($name)) { $errors["name"] = "nom de l'association est requis!"; }
+    if (empty($email)) { $error["email"] = "Email est requis!"; } 
+    if (empty($mdps)) { $error["mdps"] = "Mot de passe est requis!"; }
+    if (empty($confirmotdepasse)) { $error["confirmotdepasse"] = "Veuillez confirmer le mot de passe!"; }
+    if (empty($info)) { $error["info"] = "Description est requis!"; }
+    if (empty($adresse)) { $error["adresse"] = "Adresse est requis!"; }
+    if (empty($numero)) { $error["numero"] = "Numero de telephone est requis!"; }
+    if (empty($domaine)) { $error["domaine"] = "Domaine de l'association est requis!"; }
+    
+    if (empty(array_filter($errors))) {
         $hash = password_hash($mdps, PASSWORD_DEFAULT);
-        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine)");
+        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, false)");
         $sql->execute([
             ':nom' => $name,
             ':email' => $email,
@@ -36,8 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':domaine' => $domaine,
         ]);
         header('location:connexion.php');
-    } else {
-        echo 'Veuillez entrer tout les donnees ';
     }
 }
 ?>
@@ -87,6 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form method="post" class="form-group">
                     <!-- Nom de l'association -->
                     <label for="nom">Nom de l'association</label>
+                    <div class="form-error"><?= $errors["name"] ?></div>
                     <input type="text" id="nom" name="nom" required>
 
                     <!-- Preuve (facultatif ici car pas utilisé en PHP) -->
@@ -98,37 +119,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- Adresse -->
                     <label for="adresse">Adresse</label>
+                    <div class="form-error"><?= $errors["adresse"] ?></div>
                     <input type="text" id="adresse" name="adresse" required>
 
                     <!-- Email -->
                     <label for="email">Email</label>
+                    <div class="form-error"><?= $errors["email"] ?></div>
                     <input type="email" id="email" name="email" required>
 
                     <!-- Numéro -->
                     <label for="numero">Numero de téléphone</label>
+                    <div class="form-error"><?= $errors["numero"] ?></div>
                     <input type="text" id="numero" name="numero" required>
 
                     <!-- Mot de passe -->
                     <label for="motdepasse">Mot de passe</label>
+                    <div class="form-error"><?= $errors["mdps"] ?></div>
                     <input type="password" id="motdepasse" name="motdepasse" required>
 
                     <!-- Confirmation -->
                     <label for="confirmotdepasse">Confirmer mot de passe</label>
+                    <div class="form-error"><?= $errors["confirmotdepasse"] ?></div>
                     <input type="password" id="confirmotdepasse" name="confirmotdepasse" required>
 
                     <!-- Domaine -->
                     <label for="domaine">Domaine</label>
+                    <div class="form-error"><?= $errors["domaine"] ?></div>
                     <input type="text" id="domaine" name="domaine" required>
 
                     <!-- Description -->
                     <label for="description">Description</label>
+                    <div class="form-error"><?= $errors["info"] ?></div>
                     <textarea id="info" name="info" required></textarea>
 
 
 
                     <input type="submit" value="S'inscrire">
 
-                    <div class="question">Vous avez déjà un compte? <a href="connexion.php" class="white-button" ">Connectez-vous</a></div>
+                    <div class="question">Vous avez déjà un compte? <a href="connexion.php"
+                            class="white-button">Connectez-vous</a></div>
 
                 </form>
             </div>
@@ -138,9 +167,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
     <footer>
         <div class=" copyright">
-                            <p>&copy; 2025 YADFYAD. All rights reserved.</p>
-                    </div>
-                    </footer>
+            <p>&copy; 2025 YADFYAD. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 
 </html>

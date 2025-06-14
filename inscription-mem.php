@@ -1,5 +1,6 @@
 <?php
 session_start();
+ini_set('display_errors', 'on');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db = "mysql:host=localhost;dbname=yadfyad";
     $user = "root";

@@ -31,10 +31,19 @@ a {
 
 :root {
     --mainColor: #0048A6;
+    --lightMainColor: #0048A680;
     --buttonColor: #267CF4;
     --lightGrey: #71717aaf;
     --backgoundcolor: #f1f5f9;
     --textColor: #000000;
+    --experienceColor: #9333EA;
+    --bgExperience: #f3e8ff;
+    --problemeColor: #dc2626;
+    --bgProbleme: #fee2e2;
+    --activiteColor: #16a34a;
+    --bgActivite: #dcfce7;
+    --greenColor: #059669;
+    --bgGreen: #0596686d;
 }
 
 section {
@@ -124,11 +133,30 @@ section {
 
 .post-image {
     background-color: var(--lightGrey);
-    margin-bottom: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.post-image:not(:empty) {
+    margin-top: 20px;
 }
 
 .post-image img {
     width: 100%;
+}
+
+.post-info {
+    display: flex;
+    gap: 12px;
+    color: #999;
+    font-size: 16px;
+    padding-top: 20px;
+}
+
+.post .post-info .post-info-element {
+    display: flex;
+    gap: 7px;
+    align-items: center;
 }
 
 .post .post-container {
@@ -143,8 +171,8 @@ section {
 }
 
 .post .post-header .post-icone {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background-color: var(--lightGrey);
     border-radius: 50%;
 }
@@ -152,15 +180,50 @@ section {
 .post .post-header .post-header-contenu {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
+
 .post .post-header .post-type {
-    font-size: 14px;
-    font-weight: 500;
+    padding: 7px 10px;
+    border-radius: 999px;
+    color: var(--mainColor);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12PX;
+    font-weight: 600;
+}
+
+.post .post-header .post-type.experience {
+    color: var(--experienceColor);
+    background-color: var(--bgExperience);
+}
+
+.post .post-header .post-type.activite {
+    color: var(--activiteColor);
+    background-color: var(--bgActivite);
+}
+
+.post .post-header .post-type.probleme {
+    color: var(--problemeColor);
+    background-color: var(--bgProbleme);
+}
+
+.post .post-header .post-type span {
+    text-transform: capitalize;
+    padding-top: 3px;
+}
+
+.post .post-header .post-association {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding-bottom: 3px;
 }
 
 .post .post-header .post-date {
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--lightGrey);
 }
@@ -171,54 +234,34 @@ section {
 }
 
 .post .post-contenu .post-titre {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: var(--textColor);
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .post .post-contenu .post-description {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
-    color: var(--textColor);
-    margin: 10px 0;
-}
-
-.post .post-contenu .post-association {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.post .post-contenu .post-association .post-association-avatar {
-    width: 30px;
-    height: 30px;
-    background-color: var(--lightGrey);
-    border-radius: 50%;
-}
-
-.post .post-contenu .post-association .post-association-nom {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--textColor);
+    color: #999999;
+    padding-top: 10px;
 }
 
 .post .post-interactions {
     width: 100%;
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 20px;
     border-top: 1px solid var(--lightGrey);
-    padding-top: 10px;
-    gap: 10px;
+    padding: 20px 20px 0 20px;
+    gap: 30px;
 }
 
 .post .post-interactions .post-interaction-element {
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: var(--textColor);
 }

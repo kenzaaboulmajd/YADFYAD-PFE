@@ -1,3 +1,13 @@
+<?php
+  session_start();
+  require_once "config.php";
+
+  $sql = $pdo->prepare("SELECT publication.*, association.*, utilisateur.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB GROUP BY publication.ID_PUB");
+  $sql->execute();
+
+  $publications = $sql->fetchAll();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,19 +20,16 @@
 </head>
 
 <body>
-    <header>
-        <?php require_once "sections/navbar.php";
-    ?>
-    </header>
+    <header><?php require_once "sections/navbar.php"; ?></header>
     <section>
         <div class="container">
             <div class="header-actualite">
                 <div class="links-tous">
                     <ul>
-                        <li> <a href="#"> Tous</a></li>
-                        <li> <a href="#"> Problèmes</a></li>
-                        <li> <a href="#"> Activitès</a></li>
-                        <li> <a href="#"> Expériences</a></li>
+                        <li> <a href="#">Tous</a></li>
+                        <li> <a href="#">Problèmes</a></li>
+                        <li> <a href="#">Activitès</a></li>
+                        <li> <a href="#">Expériences</a></li>
                     </ul>
                 </div>
                 <div class="recherche">
@@ -30,52 +37,86 @@
 
                 </div>
             </div>
-            <di class="posts">
+            <div class="posts">
+                <?php foreach ($publications as $publication): ?>
                 <div class="post">
-                    <div class="post-image"></div>
                     <div class="post-container">
 
                         <div class="post-header">
                             <div class="post-icone"></div>
                             <div class="post-header-contenu">
-                                <div class="post-type">Problème</div>
-                                <div class="post-date">Il y'a 2 jours</div>
+                                <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
+                                <div class="post-date">
+                                    <?= date("d M Y, H:i", strtotime($publication["DATE_CREATION"])); ?></div>
                             </div>
+                            <div class="post-type <?= str_replace(["è", "é"], "e", $publication["TYPE_PUB"]) ?>"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-calendar-days-icon lucide-calendar-days">
+                                    <path d="M8 2v4" />
+                                    <path d="M16 2v4" />
+                                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                                    <path d="M3 10h18" />
+                                    <path d="M8 14h.01" />
+                                    <path d="M12 14h.01" />
+                                    <path d="M16 14h.01" />
+                                    <path d="M8 18h.01" />
+                                    <path d="M12 18h.01" />
+                                    <path d="M16 18h.01" />
+                                </svg><span><?= $publication["TYPE_PUB"] ?></span></div>
                         </div>
                         <div class="post-contenu">
-                            <div class="post-titre">Manque de bénévoles pour notre événement environnemental</div>
-                            <div class="post-description">Nous organisons un événement de sensibilisation
-                                environnementale
-                                le mois
-                                prochain et nous manquons de
-                                bénévoles pour l'organisation et la logistique. Nous avons besoin d'au moins 10
-                                personnes
-                                pour assurer
-                                le
-                                bon déroulement de l'événement.</div>
-                            <div class="post-association">
-                                <div class="post-association-avatar"></div>
-                                <div class="post-association-nom">Association pour le Développement Durable</div>
+                            <div class="post-titre"><?= $publication["TITRE"] ?></div>
+                            <div class="post-description"><?= $publication["DISCRIPTION"] ?></div>
+                            <?php if ($publication["media_urls"]): ?>
+                            <div class="post-image">
+                                <img src=<?= explode(",", $publication["media_urls"])[0] ?> alt="">
+                            </div>
+                            <?php endif; ?>
+                            <div class="post-info">
+                                <?php if ($publication["LIEU_EVENEMENT_LACTIVITE"]): ?>
+                                <div class="post-info-element">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin">
+                                        <path
+                                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                    <span><?= $publication["LIEU_EVENEMENT_LACTIVITE"] ?></span>
+                                </div>
+                                <?php endif; ?>
+                                <?php if ($publication["DATE_EVENEMENT_ACTIVITE"]): ?>
+                                <div class="post-info-element">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-clock10-icon lucide-clock-10">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 8 10" />
+                                    </svg>
+                                    <span><?= date("d M Y", strtotime($publication["DATE_EVENEMENT_ACTIVITE"])) ?></span>
+                                </div>
+                                <?php endif; ?>
                             </div>
                             <div class="post-interactions">
                                 <div class="post-interaction-element">
-                                    <div class="icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
+                                    <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-heart-icon lucide-heart">
                                             <path
-                                                d="M12.6666 9.33333C13.66 8.36 14.6666 7.19333 14.6666 5.66667C14.6666 4.69421 14.2803 3.76158 13.5927 3.07394C12.9051 2.38631 11.9724 2 11 2C9.82665 2 8.99998 2.33333 7.99998 3.33333C6.99998 2.33333 6.17331 2 4.99998 2C4.02752 2 3.09489 2.38631 2.40725 3.07394C1.71962 3.76158 1.33331 4.69421 1.33331 5.66667C1.33331 7.2 2.33331 8.36667 3.33331 9.33333L7.99998 14L12.6666 9.33333Z"
-                                                stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
-                                                stroke-linejoin="round" />
+                                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                                         </svg>
-                                        <div class="valeur">3</div>
                                     </div>
+                                    <div class="valeur">3</div>
                                 </div>
                                 <div class="post-interaction-element">
-                                    <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M14.67 10C14.67 10.3536 14.5295 10.6928 14.2795 10.9428C14.0294 11.1929 13.6903 11.3333 13.3366 11.3333H5.33665L2.66998 14V3.33333C2.66998 2.97971 2.81046 2.64057 3.06051 2.39052C3.31056 2.14048 3.64969 2 4.00332 2H13.3366C13.6903 2 14.0294 2.14048 14.2795 2.39052C14.5295 2.64057 14.67 2.97971 14.67 3.33333V10Z"
-                                                stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
-                                                stroke-linejoin="round" />
+                                    <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-message-circle-icon lucide-message-circle">
+                                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
                                         </svg>
                                     </div>
                                     <div class="valeur">12</div>
@@ -85,63 +126,8 @@
                     </div>
 
                 </div>
-                <div class="post">
-                    <div class="post-image">
-                        <img src="https://placehold.co/600x400" alt="">
-                    </div>
-                    <div class="post-container">
-
-                        <div class="post-header">
-                            <div class="post-icone"></div>
-                            <div class="post-header-contenu">
-                                <div class="post-type">Activité</div>
-                                <div class="post-date">Il y'a 2 jours</div>
-                            </div>
-                        </div>
-                        <div class="post-contenu">
-                            <div class="post-titre">Manque de bénévoles pour notre événement environnemental</div>
-                            <div class="post-description">Nous organisons un événement de sensibilisation
-                                environnementale
-                                le mois
-                                prochain et nous manquons de
-                                bénévoles pour l'organisation et la logistique. Nous avons besoin d'au moins 10
-                                personnes
-                                pour assurer
-                                le
-                                bon déroulement de l'événement.</div>
-                            <div class="post-association">
-                                <div class="post-association-avatar"></div>
-                                <div class="post-association-nom">Association pour le Développement Durable</div>
-                            </div>
-                            <div class="post-interactions">
-                                <div class="post-interaction-element">
-                                    <div class="icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M12.6666 9.33333C13.66 8.36 14.6666 7.19333 14.6666 5.66667C14.6666 4.69421 14.2803 3.76158 13.5927 3.07394C12.9051 2.38631 11.9724 2 11 2C9.82665 2 8.99998 2.33333 7.99998 3.33333C6.99998 2.33333 6.17331 2 4.99998 2C4.02752 2 3.09489 2.38631 2.40725 3.07394C1.71962 3.76158 1.33331 4.69421 1.33331 5.66667C1.33331 7.2 2.33331 8.36667 3.33331 9.33333L7.99998 14L12.6666 9.33333Z"
-                                                stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                        <div class="valeur">3</div>
-                                    </div>
-                                </div>
-                                <div class="post-interaction-element">
-                                    <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M14.67 10C14.67 10.3536 14.5295 10.6928 14.2795 10.9428C14.0294 11.1929 13.6903 11.3333 13.3366 11.3333H5.33665L2.66998 14V3.33333C2.66998 2.97971 2.81046 2.64057 3.06051 2.39052C3.31056 2.14048 3.64969 2 4.00332 2H13.3366C13.6903 2 14.0294 2.14048 14.2795 2.39052C14.5295 2.64057 14.67 2.97971 14.67 3.33333V10Z"
-                                                stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </svg>
-                                    </div>
-                                    <div class="valeur">12</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-        </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
     <script src="script.js"></script>

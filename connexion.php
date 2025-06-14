@@ -1,5 +1,7 @@
 <?php
 session_start();
+ini_set('display_errors', 'on');
+$error = "";
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $sdn = "mysql:host=localhost;dbname=yadfyad";
     $user = "root";
@@ -16,14 +18,33 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $sql->execute([
         ':email' => $email
     ]);
-    if ($users = $sql->fetch(PDO::FETCH_ASSOC)) {
+    $users = $sql->fetch(PDO::FETCH_ASSOC);
+    $usersCount = $sql->rowCount();
+    
+    if ($usersCount) {
         if (password_verify($mdps, $users["MOT_DE_PASSE"])) {
             $_SESSION["email"] = $users["EMAIL"];
-
+            echo "eee";
             header("location:actualite.php");
         }
     } else {
-        echo "email ou mot de passe incorrect";
+        $sql = $conn->prepare("SELECT * FROM association WHERE EMAIL=:email");
+        $sql->execute([
+            ':email' => $email
+        ]);
+        $association = $sql->fetch(PDO::FETCH_ASSOC);
+        $associationCount = $sql->rowCount();
+
+        if ($associationCount) {
+            if (password_verify($mdps, $association["MOT_DE_PASSE"])) {
+                $_SESSION["email"] = $association["EMAIL"];
+    
+                header("location:actualite.php");
+            }
+        } else {
+            $error = "email ou mot de passe incorrect";
+        }
+        
     }
 }
 ?>
@@ -60,6 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <h2>Connexion</h2>
                         <p>Connectez-vous à votre compte YADFYAD</p>
                     </div>
+                    <div class="form-error">
+                        <?= $error; ?></div>
                     <form method="post" action="">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>
