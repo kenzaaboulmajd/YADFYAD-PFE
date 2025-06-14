@@ -12,7 +12,7 @@
 <body>
     <header>
         <?php require_once "sections/navbar.php";
-    ?>
+        ?>
     </header>
     <section>
         <div class="container">
@@ -66,9 +66,9 @@
                                                 stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
-                                        <div class="valeur">3</div>
                                     </div>
                                 </div>
+                                <div class="valeur">3</div>
                                 <div class="post-interaction-element">
                                     <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -122,8 +122,8 @@
                                                 stroke="#020817" stroke-width="1.33333" stroke-linecap="round"
                                                 stroke-linejoin="round" />
                                         </svg>
-                                        <div class="valeur">3</div>
                                     </div>
+                                    <div class="valeur">3</div>
                                 </div>
                                 <div class="post-interaction-element">
                                     <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
