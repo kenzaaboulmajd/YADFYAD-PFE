@@ -55,6 +55,7 @@
       </div>
       <div class="links-profile">
         <ul class="links">
+          <!-- javascript -->
           <li><a href="">Publication</a></li>
           <li><a href="">A propos</a></li>
           <li><a href="">Contact</a></li>
