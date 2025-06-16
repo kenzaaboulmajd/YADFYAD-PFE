@@ -19,17 +19,15 @@
   <?php require_once "sections/navbar.php"; ?>
 
   <section>
-    <div class="container">
+    <div class="container-full">
       <div class="titre">
         <h2>Message</h2>
         <p>Communiquez avec d'autres associations</p>
       </div>
     </div>
-  </section>
-  <section>
     <div class="parent-container">
-      <div class="sidebar">
-        <div class="cherche"> <input type="text" placeholder="rechercher..."></div>
+      <div class="sidebar"> <!-- Colonne de gauche -->
+        <div class="cherche"><input type="text" placeholder="Rechercher..."></div>
         <div class="chat-teams">
           <ul>
             <li>
@@ -51,10 +49,33 @@
         </div>
       </div>
 
-      <div class="chat-container"></div>
+      <div class="chat-container"> <!-- Zone droite -->
+        <div class="chat-header">
+          <div class="profile">
+            <div class="avatare"></div>
+          </div>
+          <div class="nom-user">Association 1</div>
+        </div>
+        <div class="chat-messages">
+          <ul>
+            <li class="message sent">
+              <p>Bonjour, comment puis-je vous aider ?</p>
+              <div class="time">10:30</div>
+            </li>
+            <li class="message received">
+              <p>Bonjour, j'ai besoin d'aide pour organiser un événement.</p>
+              <div class="time">10:30</div>
+            </li>
+          </ul>
+        </div>
+        <div class="chat-input">
+          <input>
+          <button>Envoyer</button>
+        </div>
+      </div>
     </div>
   </section>
-
+  <script src="script.js"></script>
 </body>
 
 </html>

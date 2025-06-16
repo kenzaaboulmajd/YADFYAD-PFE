@@ -39,3 +39,6 @@ associationTabsTriggers.forEach(associationTabTrigger => {
         associationTab.classList.add("active");
     })
 })
+//==Scroll to top button====window.onload = () => {
+const msgBox = document.querySelector('.chat-messages');
+msgBox.scrollTop = msgBox.scrollHeight;

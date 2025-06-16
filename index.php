@@ -34,9 +34,8 @@
                 </div>
 
                 <div class="img">
-                    <img src="imge-hero-removebg-preview.png" alt="image-hero">
-                    <span></span>
-                    <span></span>
+                    <img src="imge-hero-removebg-preview.png" alt="image-hero" width="550">
+
                 </div>
             </div>
         </div>

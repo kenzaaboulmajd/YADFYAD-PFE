@@ -1,6 +1,6 @@
 <?php
-  session_start();
-  require_once "config.php";
+session_start();
+require_once "config.php";
 
     $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
     $sql->execute([":email" => $_SESSION["email"]]);
@@ -9,7 +9,7 @@
   $sql = $pdo->prepare("SELECT publication.*, association.*, utilisateur.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls, GROUP_CONCAT(liker.ID_UTILISATEUR SEPARATOR ',') AS likers FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB GROUP BY publication.ID_PUB");
   $sql->execute();
 
-  $publications = $sql->fetchAll();
+$publications = $sql->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <header><?php require_once "sections/navbar.php"; ?></header>
+    <?php require_once "sections/navbar.php"; ?>
     <section>
         <div class="container">
             <div class="header-actualite">
