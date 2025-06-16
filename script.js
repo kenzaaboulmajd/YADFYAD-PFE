@@ -8,3 +8,8 @@ if(navToggle){
         navMenu.classList.toggle('show-menu');
     });
 }
+
+//==Scroll to top button====window.onload = () => {
+  const msgBox = document.querySelector('.chat-messages');
+  msgBox.scrollTop = msgBox.scrollHeight;
+};

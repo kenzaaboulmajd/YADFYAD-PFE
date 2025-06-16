@@ -56,8 +56,8 @@
                         <input type="text" id="titre" name="titre" placeholder="Entrez le titre de votre experience"
                             required>
 
-                        <label for="lieu">resume</label>
-                        <input type="text" id="resume" name="resume" placeholder="Entrez le resume du experience"
+                        <label for="lieu">lieu</label>
+                        <input type="text" id="resume" name="resume" placeholder="Entrez le lieu du experience"
                             required>
 
                         <label for="content">contenu dettaille:</label>
