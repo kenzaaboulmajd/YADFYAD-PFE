@@ -1,5 +1,45 @@
 <?php
+session_start();
+require_once "../config.php";
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $titre = $_POST['titre'];
+    $date = $_POST['date'];
+    $lieu = $_POST['lieu'];
+    $content = $_POST['content'];
+
+    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
+    $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
+    $user = $sql->fetch();
+
+    // Handle file upload
+    if (isset($_FILES['preuve']) && $_FILES['preuve']['error'] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['preuve']['tmp_name'];
+        $fileName = $_FILES['preuve']['name'];
+        $fileSize = $_FILES['preuve']['size'];
+        $fileType = $_FILES['preuve']['type'];
+
+        // Define the upload directory
+        $uploadDir = '../uploads/';
+        $dest_path = $uploadDir . basename($fileName);
+    } else {
+        $dest_path = null; // No file uploaded
+    }
+
+    // Insert activity into the database
+    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, DATE_EVENEMENT_ACTIVITE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB) VALUES (:titre, :date, :lieu, :content, :id_utilisateur, :type_pub)");
+    $stmt->execute([
+        ':titre' => $titre,
+        ':date' => $date,
+        ':lieu' => $lieu,
+        ':content' => $content,
+        ':id_utilisateur' => $user['ID_UTILISATEUR'], // Assuming you have user ID in session
+        ':type_pub' => 'activité' // Set the publication type
+    ]);
+
+    header("Location:../profile-association.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,8 +49,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="prepdoect" href="https://fonts.googleapis.com">
+    <link rel="prepdoect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
@@ -54,7 +94,7 @@
                         <p>Partagez les informations sur une activité que votre association a réalisée</p>
                     </div>
 
-                    <form action="experience.php" method="post">
+                    <form action="" method="post">
                         <div class="form-group activite">
                             <label for="titre">Titre de l'activité </label>
                             <input type="text" id="titre" name="titre" placeholder="Entrez le titre de votre experience"

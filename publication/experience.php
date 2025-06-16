@@ -1,3 +1,47 @@
+<?php
+session_start();
+require_once "../config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $titre = $_POST['titre'];
+    $lieu = $_POST['lieu'];
+    $content = $_POST['content'];
+    $tags = $_POST['tags'];
+
+    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
+    $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
+    $user = $sql->fetch();
+
+    // Handle file upload
+    if (isset($_FILES['preuve']) && $_FILES['preuve']['error'] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['preuve']['tmp_name'];
+        $fileName = $_FILES['preuve']['name'];
+        $fileSize = $_FILES['preuve']['size'];
+        $fileType = $_FILES['preuve']['type'];
+
+        // Define the upload directory
+        $uploadDir = '../uploads/';
+        $dest_path = $uploadDir . basename($fileName);
+        move_uploaded_file($fileTmpPath, $dest_path);
+    } else {
+        $dest_path = null; // No file uploaded
+    }
+
+    // Insert experience into the database
+    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB) VALUES (:titre, :lieu, :content, :id_utilisateur, :type_pub)");
+    $stmt->execute([
+        ':titre' => $titre,
+        ':lieu' => $lieu,
+        ':content' => $content,
+        ':id_utilisateur' => $user['ID_UTILISATEUR'], // Assuming you have user ID in session
+        ':type_pub' => 'expérience' // Set the publication type
+    ]);
+
+    header("Location:../profile-association.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

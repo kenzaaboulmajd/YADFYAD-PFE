@@ -1,3 +1,32 @@
+<?php
+session_start();
+require_once "../config.php";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $titre = $_POST['titre'];
+    $lieu = $_POST['lieu'];
+    $content = $_POST['content'];
+    $tags = $_POST['tags'];
+
+    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
+    $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
+    $user = $sql->fetch();
+
+    // Insert problem into the database
+    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB) VALUES (:titre, :lieu, :content, :id_utilisateur, :type_pub)");
+    $stmt->execute([
+        ':titre' => $titre,
+        ':lieu' => $lieu,
+        ':content' => $content,
+        ':id_utilisateur' => $user['ID_UTILISATEUR'], // Assuming you have user ID in session
+        ':type_pub' => 'problème' // Set the publication type
+    ]);
+
+    header("Location:../profile-association.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

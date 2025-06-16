@@ -7,7 +7,7 @@
             <div class="link">
                 <ul>
                     <li><a href="http://localhost/YADFYAD-PFE/actualite.php">Accueil</a></li>
-                    <li><a href="YADFYAD-PFE/sections/associations.php">Associations</a></li>
+                    <li><a href="http://localhost/YADFYAD-PFE/associations.php">Associations</a></li>
                 </ul>
             </div>
             <div class="icons">
