@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if ($usersCount) {
         if (password_verify($mdps, $users["MOT_DE_PASSE"])) {
             $_SESSION["email"] = $users["EMAIL"];
-            echo "eee";
             header("location:actualite.php");
         }
     } else {

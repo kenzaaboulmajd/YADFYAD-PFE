@@ -6,7 +6,7 @@
             </div>
             <div class="link">
                 <ul>
-                    <li><a href="http://localhost/YADFYAD-PFE/actualite.php">Accueil</a></li>
+                    <li><a href="http://localhost/YADFYAD PFE/actualite.php">Accueil</a></li>
                     <li><a href="YADFYAD-PFE/sections/associations.php">Associations</a></li>
                 </ul>
             </div>
@@ -31,8 +31,8 @@
                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
                         </svg></li>
-                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="#f90606" stroke-width="1" stroke-linecap="round"
+                    <li><a href="logout.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                viewBox="0 0 24 24" fill="none" stroke="#f90606" stroke-width="1" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out">
                                 <path d="m16 17 5-5-5-5" />
                                 <path d="M21 12H9" />
@@ -94,7 +94,7 @@
                                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                                     <circle cx="12" cy="7" r="4" />
                                 </svg>Profile</a></li>
-                        <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        <li><a href="logout.php"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     viewBox="0 0 24 24" fill="none" stroke="#f90606" stroke-width="1"
                                     stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-log-out-icon lucide-log-out">

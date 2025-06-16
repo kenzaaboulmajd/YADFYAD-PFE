@@ -2,7 +2,11 @@
   session_start();
   require_once "config.php";
 
-  $sql = $pdo->prepare("SELECT publication.*, association.*, utilisateur.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB GROUP BY publication.ID_PUB");
+    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
+    $sql->execute([":email" => $_SESSION["email"]]);
+    $utilisateur = $sql->fetch();
+
+  $sql = $pdo->prepare("SELECT publication.*, association.*, utilisateur.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls, GROUP_CONCAT(liker.ID_UTILISATEUR SEPARATOR ',') AS likers FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB GROUP BY publication.ID_PUB");
   $sql->execute();
 
   $publications = $sql->fetchAll();
@@ -45,7 +49,8 @@
                         <div class="post-header">
                             <div class="post-icone"></div>
                             <div class="post-header-contenu">
-                                <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
+                                <a href="profile.php?id=<?= $publication["ID_ASSOCIATION"] ?>"
+                                    class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></a>
                                 <div class="post-date">
                                     <?= date("d M Y, H:i", strtotime($publication["DATE_CREATION"])); ?></div>
                             </div>
@@ -101,7 +106,9 @@
                             </div>
                             <div class="post-interactions">
                                 <div class="post-interaction-element">
-                                    <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    <div class="icone like <?= in_array($utilisateur["ID_UTILISATEUR"], explode(",", $publication["likers"])) ? "liking" : "" ?>"
+                                        data-publication="<?= $publication["ID_PUB"] ?>"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                             stroke-linecap="round" stroke-linejoin="round"
                                             class="lucide lucide-heart-icon lucide-heart">
@@ -109,8 +116,9 @@
                                                 d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                                         </svg>
                                     </div>
-                                    <div class="valeur">3</div>
-                                    <div class="valeur">3</div>
+                                    <div class="valeur">
+                                        <?= !empty($publication["likers"]) ? count(explode(",", $publication["likers"])) : 0 ?>
+                                    </div>
                                 </div>
                                 <div class="post-interaction-element">
                                     <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -132,6 +140,7 @@
         </div>
     </section>
     <script src="script.js"></script>
+    <script src="requets.js"></script>
 </body>
 
 </html>

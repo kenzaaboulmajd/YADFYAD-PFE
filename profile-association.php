@@ -1,183 +1,296 @@
+<?php
+session_start();
+require_once "config.php";
+
+$email = $_SESSION["email"];
+
+$isAssociation = false;
+$isAssociationMember = false;
+$publications = [];
+
+$sql = $pdo->prepare("SELECT * FROM association WHERE EMAIL = :email");
+$sql->execute([":email" => $email]);
+
+$association = $sql->fetch();
+$isAssociation = (bool) $sql->rowCount();
+
+if (!$isAssociation) {
+  $sql = $pdo->prepare("SELECT * FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
+  $sql->execute([":email" => $email]);
+
+  $association = $sql->fetch();
+  $isAssociationMember = (bool) $sql->rowCount();
+}
+
+if ($isAssociation || $isAssociationMember) {
+  $sql = $pdo->prepare("SELECT publication.*, association.*, utilisateur.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB WHERE utilisateur.ID_UTILISATEUR = :id_utilisateur GROUP BY publication.ID_PUB");
+  $sql->execute([":id_utilisateur" => $association["ID_UTILISATEUR"]]);
+
+  $publications = $sql->fetchAll();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
-  <link rel="stylesheet" href="assets/styles/style.css">
-  <link rel="stylesheet" href="profile-association.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="profile-association.css">
+    <link rel="stylesheet" href="actualite.css">
 </head>
 
 <body>
-  <!-- NAVBARE -->
-  <?php require_once "sections/navbar.php"; ?>
+    <!-- NAVBARE -->
+    <?php require_once "sections/navbar.php"; ?>
 
-  <!-- posts section -->
-  <section>
-    <div class="container">
-      <div class="head-profil">
-        <div class="photo-profil">
-          <div class="avatar"></div>
-        </div>
-        <div class="script-profil">
-          <h2>Nom de l'association</h2>
-          <p>Description de l'association Lorem ipsum dolor, sit amet consectetur adipisicing elit. Libero repellat
-            corporis ratione dolorum sed voluptatem provident!</p>
-          <div class="lieu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-              fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-map-pin-icon lucide-map-pin">
-              <path
-                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>Agadir</div>
-        </div>
-        <div class="bouttons">
-          <!-- <label for="publication">Nouvelle publication :</label> -->
-          <select id="association" name="association">
-            <a href="prbleme.php">
-              Probleme
-            </a>
-            <a href="activite.php">
-              Activite
-            </a>
-            <a href="experience.php">
-              Experiencn</a>
-          </select>
-          <a href="modifier-profile.php">Modifier</a>
-        </div>
-      </div>
-      <div class="nombre">
-        <div class="abonnes"><span style="color:green;">0</span> Abonnés</div>
-        <div class="membres"><span style="color:blue ;">0 </span>Membres</div>
-      </div>
-      <div class="links-profile">
-        <ul class="links">
-          <!-- javascript -->
-          <li><a href="">Publication</a></li>
-          <li><a href="">A propos</a></li>
-          <li><a href="">Contact</a></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-  <!-- publication -->
-  <section>
-    <div class="container">
-      <di class="posts">
-        <div class="post">
-          <div class="post-image"></div>
-          <div class="post-container">
-
-            <div class="post-header">
-              <div class="post-icone"></div>
-              <div class="post-header-contenu">
-                <div class="post-type">Problème</div>
-                <div class="post-date">Il y'a 2 jours</div>
-              </div>
-            </div>
-            <div class="post-contenu">
-              <div class="post-titre">Manque de bénévoles pour notre événement environnemental</div>
-              <div class="post-description">Nous organisons un événement de sensibilisation
-                environnementale
-                le mois
-                prochain et nous manquons de
-                bénévoles pour l'organisation et la logistique. Nous avons besoin d'au moins 10
-                personnes
-                pour assurer
-                le
-                bon déroulement de l'événement.</div>
-              <div class="post-association">
-                <div class="post-association-avatar"></div>
-                <div class="post-association-nom">Association pour le Développement Durable</div>
-              </div>
-              <div class="post-interactions">
-                <div class="post-interaction-element">
-                  <div class="icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M12.6666 9.33333C13.66 8.36 14.6666 7.19333 14.6666 5.66667C14.6666 4.69421 14.2803 3.76158 13.5927 3.07394C12.9051 2.38631 11.9724 2 11 2C9.82665 2 8.99998 2.33333 7.99998 3.33333C6.99998 2.33333 6.17331 2 4.99998 2C4.02752 2 3.09489 2.38631 2.40725 3.07394C1.71962 3.76158 1.33331 4.69421 1.33331 5.66667C1.33331 7.2 2.33331 8.36667 3.33331 9.33333L7.99998 14L12.6666 9.33333Z"
-                        stroke="#020817" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </div>
+    <!-- posts section -->
+    <section>
+        <div class="container">
+            <div class="head-profil">
+                <div class="photo-profil">
+                    <div class="avatar"></div>
                 </div>
-                <div class="valeur">3</div>
-                <div class="post-interaction-element">
-                  <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M14.67 10C14.67 10.3536 14.5295 10.6928 14.2795 10.9428C14.0294 11.1929 13.6903 11.3333 13.3366 11.3333H5.33665L2.66998 14V3.33333C2.66998 2.97971 2.81046 2.64057 3.06051 2.39052C3.31056 2.14048 3.64969 2 4.00332 2H13.3366C13.6903 2 14.0294 2.14048 14.2795 2.39052C14.5295 2.64057 14.67 2.97971 14.67 3.33333V10Z"
-                        stroke="#020817" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </div>
-                  <div class="valeur">12</div>
+                <div class="script-profil">
+                    <h2><?= $association["NOM_ASSOCIATION"] ?></h2>
+                    <p><?= $association["INFO"] ?></p>
+                    <div class="lieu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                            stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin">
+                            <path
+                                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>Agadir</div>
                 </div>
-              </div>
+                <div class="bouttons">
+                    <!-- <label for="publication">Nouvelle publication :</label> -->
+                    <div class="new-publication-close-overlay"></div>
+                    <div class="new-publication">
+                        <div class="new-publication-trigger">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M8 12h8" />
+                                <path d="M12 8v8" />
+                            </svg>
+                            <span>Nouvelle Publication</span>
+                        </div>
+                        <div class="new-publication-types">
+                            <a href="publication/activite.php" class="new-publication-type activite"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-calendar-days-icon lucide-calendar-days">
+                                    <path d="M8 2v4" />
+                                    <path d="M16 2v4" />
+                                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                                    <path d="M3 10h18" />
+                                    <path d="M8 14h.01" />
+                                    <path d="M12 14h.01" />
+                                    <path d="M16 14h.01" />
+                                    <path d="M8 18h.01" />
+                                    <path d="M12 18h.01" />
+                                    <path d="M16 18h.01" />
+                                </svg>Activité</a>
+                            <a href="publication/probleme.php" class="new-publication-type probleme"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-info-icon lucide-info">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 16v-4" />
+                                    <path d="M12 8h.01" />
+                                </svg>Problème</a>
+                            <a href="publication/experience.php" class="new-publication-type experience"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb">
+                                    <path
+                                        d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
+                                    <path d="M9 18h6" />
+                                    <path d="M10 22h4" />
+                                </svg>Experience</a>
+                        </div>
+                    </div>
+                    <a class="" href="modifier-profile.php"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                            height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pen-icon lucide-pen">
+                            <path
+                                d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                        </svg></a>
+                </div>
             </div>
-          </div>
-
+            <div class="nombre">
+                <div class="abonnes"><span style="color:green;">0</span> Abonnés</div>
+                <div class="membres"><span style="color:blue ;">0 </span>Membres</div>
+            </div>
+            <div class="links-profile">
+                <ul class="links association-profile-tabs-triggers">
+                    <!-- javascript -->
+                    <li class="tab-trigger active" data-tab="publications">Publications</li>
+                    <li class="tab-trigger" data-tab="about">About</li>
+                    <li class="tab-trigger" data-tab="contact">Contact</li>
+                </ul>
+            </div>
         </div>
-        <div class="post">
-          <div class="post-image">
-            <img src="https://placehold.co/600x400" alt="">
-          </div>
-          <div class="post-container">
+    </section>
+    <!-- publication -->
+    <section>
+        <div class="container association-profile-tabs">
+            <div class="posts tab active" data-tab="publications">
+                <?php foreach ($publications as $publication): ?>
+                <div class="post">
+                    <div class="post-container">
 
-            <div class="post-header">
-              <div class="post-icone"></div>
-              <div class="post-header-contenu">
-                <div class="post-type">Activité</div>
-                <div class="post-date">Il y'a 2 jours</div>
-              </div>
-            </div>
-            <div class="post-contenu">
-              <div class="post-titre">Manque de bénévoles pour notre événement environnemental</div>
-              <div class="post-description">Nous organisons un événement de sensibilisation
-                environnementale
-                le mois
-                prochain et nous manquons de
-                bénévoles pour l'organisation et la logistique. Nous avons besoin d'au moins 10
-                personnes
-                pour assurer
-                le
-                bon déroulement de l'événement.</div>
-              <div class="post-association">
-                <div class="post-association-avatar"></div>
-                <div class="post-association-nom">Association pour le Développement Durable</div>
-              </div>
-              <div class="post-interactions">
-                <div class="post-interaction-element">
-                  <div class="icone"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M12.6666 9.33333C13.66 8.36 14.6666 7.19333 14.6666 5.66667C14.6666 4.69421 14.2803 3.76158 13.5927 3.07394C12.9051 2.38631 11.9724 2 11 2C9.82665 2 8.99998 2.33333 7.99998 3.33333C6.99998 2.33333 6.17331 2 4.99998 2C4.02752 2 3.09489 2.38631 2.40725 3.07394C1.71962 3.76158 1.33331 4.69421 1.33331 5.66667C1.33331 7.2 2.33331 8.36667 3.33331 9.33333L7.99998 14L12.6666 9.33333Z"
-                        stroke="#020817" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </div>
-                  <div class="valeur">3</div>
-                </div>
-                <div class="post-interaction-element">
-                  <div class="icone"><svg width="17" height="16" viewBox="0 0 17 16" fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M14.67 10C14.67 10.3536 14.5295 10.6928 14.2795 10.9428C14.0294 11.1929 13.6903 11.3333 13.3366 11.3333H5.33665L2.66998 14V3.33333C2.66998 2.97971 2.81046 2.64057 3.06051 2.39052C3.31056 2.14048 3.64969 2 4.00332 2H13.3366C13.6903 2 14.0294 2.14048 14.2795 2.39052C14.5295 2.64057 14.67 2.97971 14.67 3.33333V10Z"
-                        stroke="#020817" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </div>
-                  <div class="valeur">12</div>
-                </div>
-              </div>
-            </div>
-          </div>
+                        <div class="post-header">
+                            <div class="post-icone"></div>
+                            <div class="post-header-contenu">
+                                <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
+                                <div class="post-date">
+                                    <?= date("d M Y, H:i", strtotime($publication["DATE_CREATION"])); ?></div>
+                            </div>
+                            <div class="post-type <?= str_replace(["è", "é"], "e", $publication["TYPE_PUB"]) ?>"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-calendar-days-icon lucide-calendar-days">
+                                    <path d="M8 2v4" />
+                                    <path d="M16 2v4" />
+                                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                                    <path d="M3 10h18" />
+                                    <path d="M8 14h.01" />
+                                    <path d="M12 14h.01" />
+                                    <path d="M16 14h.01" />
+                                    <path d="M8 18h.01" />
+                                    <path d="M12 18h.01" />
+                                    <path d="M16 18h.01" />
+                                </svg><span><?= $publication["TYPE_PUB"] ?></span></div>
+                        </div>
+                        <div class="post-contenu">
+                            <div class="post-titre"><?= $publication["TITRE"] ?></div>
+                            <div class="post-description"><?= $publication["DISCRIPTION"] ?></div>
+                            <?php if ($publication["media_urls"]): ?>
+                            <div class="post-image">
+                                <img src=<?= explode(",", $publication["media_urls"])[0] ?> alt="">
+                            </div>
+                            <?php endif; ?>
+                            <div class="post-info">
+                                <?php if ($publication["LIEU_EVENEMENT_LACTIVITE"]): ?>
+                                <div class="post-info-element">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin">
+                                        <path
+                                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                    <span><?= $publication["LIEU_EVENEMENT_LACTIVITE"] ?></span>
+                                </div>
+                                <?php endif; ?>
+                                <?php if ($publication["DATE_EVENEMENT_ACTIVITE"]): ?>
+                                <div class="post-info-element">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-clock10-icon lucide-clock-10">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 8 10" />
+                                    </svg>
+                                    <span><?= date("d M Y", strtotime($publication["DATE_EVENEMENT_ACTIVITE"])) ?></span>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="post-interactions">
+                                <div class="post-interaction-element">
+                                    <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-heart-icon lucide-heart">
+                                            <path
+                                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="valeur">3</div>
+                                </div>
+                                <div class="post-interaction-element">
+                                    <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-message-circle-icon lucide-message-circle">
+                                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                                        </svg>
+                                    </div>
+                                    <div class="valeur">12</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="about tab" data-tab="about">
+                <div class="about-titre">Description</div>
+                <div class="about-text"><?= $publication["INFO"] ?></div>
+                <div class="about-soustitre">Domaine d'activités</div>
+                <div class="about-text"><?= $publication["DOMAINE"] ?></div>
+            </div>
+            <div class="contact tab" data-tab="contact">
+                <div class="contact-titre">Informations de contact</div>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-mail-icon lucide-mail">
+                                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                                <rect x="2" y="4" width="20" height="16" rx="2" />
+                            </svg></div>
+                        <div class="contact-value">ismailpipas@gmail.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-phone-icon lucide-phone">
+                                <path
+                                    d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
+                            </svg></div>
+                        <div class="contact-value">+212602233638</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-globe-icon lucide-globe">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                                <path d="M2 12h20" />
+                            </svg></div>
+                        <div class="contact-value">www.facebook.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-map-pin-icon lucide-map-pin">
+                                <path
+                                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg></div>
+                        <div class="contact-value">Agadir, Maroc</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    </div>
-  </section>
+    </section>
+    <script src="script.js"></script>
 </body>
 
 </html>
