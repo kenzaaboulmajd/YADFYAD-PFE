@@ -8,36 +8,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lieu = $_POST['lieu'];
     $content = $_POST['content'];
 
-    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
-    $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
-    $user = $sql->fetch();
-
-    // Handle file upload
-    if (isset($_FILES['preuve']) && $_FILES['preuve']['error'] == UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['preuve']['tmp_name'];
-        $fileName = $_FILES['preuve']['name'];
-        $fileSize = $_FILES['preuve']['size'];
-        $fileType = $_FILES['preuve']['type'];
-
-        // Define the upload directory
-        $uploadDir = '../uploads/';
-        $dest_path = $uploadDir . basename($fileName);
+    if ($_SESSION['type'] == 'association') {
+        // Fetch association details
+        $sql = $pdo->prepare("SELECT * FROM association WHERE EMAIL = :email");
+        $sql->execute([':email' => $_SESSION['email']]); // Assuming you have association email in session
+        $association = $sql->fetch();
     } else {
-        $dest_path = null; // No file uploaded
+        $sql = $pdo->prepare("SELECT * FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
+        $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
+        $user = $sql->fetch();
     }
 
     // Insert activity into the database
-    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, DATE_EVENEMENT_ACTIVITE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB) VALUES (:titre, :date, :lieu, :content, :id_utilisateur, :type_pub)");
+    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, DATE_EVENEMENT_ACTIVITE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, ID_ASSOCIATION, TYPE_PUB, DATE_CREATION) VALUES (:titre, :date, :lieu, :content, :id_utilisateur, :id_association, :type_pub, NOW())");
     $stmt->execute([
         ':titre' => $titre,
         ':date' => $date,
         ':lieu' => $lieu,
         ':content' => $content,
-        ':id_utilisateur' => $user['ID_UTILISATEUR'], // Assuming you have user ID in session
+        ':id_utilisateur' => $_SESSION["type"] == "utilisateur" ? $_SESSION["id_utilisateur"] : null, // Assuming you have user ID in session
+        ':id_association' => $_SESSION["type"] == "association" ? $_SESSION["id_association"] : $user["ID_ASSOCIATION"], // Assuming you have association ID
         ':type_pub' => 'activité' // Set the publication type
     ]);
 
-    header("Location:../profile-association.php");
+    // Handle file upload
+    if (isset($_FILES['media']) && $_FILES['media']['error'] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['media']['tmp_name'];
+        $fileName = $_FILES['media']['name'];
+        $fileSize = $_FILES['media']['size'];
+        $fileType = $_FILES['media']['type'];
+
+        // Define the upload directory
+        $uploadDir = '../uploads/';
+        $dest_path = $uploadDir . basename($fileName);
+        // Check if the file is an image or a video
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
+        if (in_array($fileType, $allowedTypes)) {
+            // Move the file to the upload directory
+            if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                // File successfully uploaded
+                $sql = $pdo->prepare("INSERT INTO medias_url (NOM_MEDIA, ID_PUB) VALUES (:media_url, LAST_INSERT_ID())");
+                $sql->execute([':media_url' => "/uploads/" . basename($fileName)]);
+            } else {
+                echo "Error moving the uploaded file.";
+                exit();
+            }
+        } else {
+            echo "Invalid file type. Only images and videos are allowed.";
+            exit();
+        }
+    }
+
+    $_SESSION["type"] == "utilisateur" ? header("Location:../profile-membre.php") : header("Location:../profile-association.php");
     exit();
 }
 ?>
@@ -94,14 +116,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p>Partagez les informations sur une activité que votre association a réalisée</p>
                     </div>
 
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group activite">
                             <label for="titre">Titre de l'activité </label>
                             <input type="text" id="titre" name="titre" placeholder="Entrez le titre de votre experience"
                                 required>
 
                             <label for="date">date</label>
-                            <input type="text" id="date" name="date" placeholder="Entrez la date d activite" required>
+                            <input type="date" id="date" name="date" placeholder="Entrez la date d activite" required>
 
                             <label for="lieu">lieu</label>
                             <input type="text" id="lieu" name="lieu" placeholder="Entrez le resume du experience"
@@ -112,10 +134,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                             <label>Photo de l'activité (optionnelle)</label>
-                            <label for="preuve" class="custom-file-upload">
+                            <label for="media" class="custom-file-upload">
                                 <div class="custom-button-upload">Choisir une image</div>
                             </label>
-                            <input type="file" id="preuve" name="preuve" hidden>
+                            <input type="file" id="media" name="media" hidden>
 
                             <input type="submit" class="activite" value="Publier l'activité">
                         </div>

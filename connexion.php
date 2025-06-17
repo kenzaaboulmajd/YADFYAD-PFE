@@ -20,10 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     ]);
     $users = $sql->fetch(PDO::FETCH_ASSOC);
     $usersCount = $sql->rowCount();
-    
+
     if ($usersCount) {
         if (password_verify($mdps, $users["MOT_DE_PASSE"])) {
             $_SESSION["email"] = $users["EMAIL"];
+            $_SESSION["type"] = "utilisateur";
+            $_SESSION["id_utilisateur"] = $users["ID_UTILISATEUR"];
             header("location:actualite.php");
         }
     } else {
@@ -37,13 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         if ($associationCount) {
             if (password_verify($mdps, $association["MOT_DE_PASSE"])) {
                 $_SESSION["email"] = $association["EMAIL"];
-    
+                $_SESSION["type"] = "association";
+                $_SESSION["id_association"] = $association["ID_ASSOCIATION"];
+
                 header("location:actualite.php");
             }
         } else {
             $error = "email ou mot de passe incorrect";
         }
-        
+
     }
 }
 ?>
@@ -81,7 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                         <p>Connectez-vous à votre compte YADFYAD</p>
                     </div>
                     <div class="form-error">
-                        <?= $error; ?></div>
+                        <?= $error; ?>
+                    </div>
                     <form method="post" action="">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" required>

@@ -8,21 +8,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $content = $_POST['content'];
     $tags = $_POST['tags'];
 
-    $sql = $pdo->prepare("SELECT * FROM utilisateur WHERE EMAIL = :email");
-    $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
-    $user = $sql->fetch();
+    if ($_SESSION['type'] == 'association') {
+        // Fetch association details
+        $sql = $pdo->prepare("SELECT * FROM association WHERE EMAIL = :email");
+        $sql->execute([':email' => $_SESSION['email']]); // Assuming you have association email in session
+        $association = $sql->fetch();
+    } else {
+        $sql = $pdo->prepare("SELECT * FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
+        $sql->execute([':email' => $_SESSION['email']]); // Assuming you have user email in session
+        $user = $sql->fetch();
+    }
 
     // Insert problem into the database
-    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB) VALUES (:titre, :lieu, :content, :id_utilisateur, :type_pub)");
+    $stmt = $pdo->prepare("INSERT INTO publication (TITRE, LIEU_EVENEMENT_LACTIVITE, DISCRIPTION, ID_UTILISATEUR, TYPE_PUB, DATE_CREATION, ID_ASSOCIATION) VALUES (:titre, :lieu, :content, :id_utilisateur, :type_pub, NOW(), :id_association)");
     $stmt->execute([
         ':titre' => $titre,
         ':lieu' => $lieu,
         ':content' => $content,
-        ':id_utilisateur' => $user['ID_UTILISATEUR'], // Assuming you have user ID in session
-        ':type_pub' => 'problème' // Set the publication type
+        ':type_pub' => 'problème', // Set the publication type
+        ':id_utilisateur' => $_SESSION["type"] == "utilisateur" ? $_SESSION["id_utilisateur"] : null, // Assuming you have user ID in session
+        ':id_association' => $_SESSION["type"] == "association" ? $_SESSION["id_association"] : $user["ID_ASSOCIATION"], // Assuming you have association ID
     ]);
 
-    header("Location:../profile-association.php");
+    $_SESSION["type"] == "utilisateur" ? header("Location:../profile-membre.php") : header("Location:../profile-association.php");
     exit();
 }
 ?>

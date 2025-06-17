@@ -3,14 +3,14 @@ ini_set('display_errors', 'on');
 session_start();
 
 $errors = array(
-"name" => "",
-"email" => "",
-"mdps" => "",
-"confirmotdepasse" => "",
-"info" => "",
-"adresse" => "",
-"numero" => "",
-"domaine" => "",
+    "name" => "",
+    "email" => "",
+    "mdps" => "",
+    "confirmotdepasse" => "",
+    "info" => "",
+    "adresse" => "",
+    "numero" => "",
+    "domaine" => "",
 );
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -33,18 +33,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         echo 'error de cnx' . $e->getMessage();
-    }    
+    }
 
 
-    if (empty($name)) { $errors["name"] = "nom de l'association est requis!"; }
-    if (empty($email)) { $error["email"] = "Email est requis!"; } 
-    if (empty($mdps)) { $error["mdps"] = "Mot de passe est requis!"; }
-    if (empty($confirmotdepasse)) { $error["confirmotdepasse"] = "Veuillez confirmer le mot de passe!"; }
-    if (empty($info)) { $error["info"] = "Description est requis!"; }
-    if (empty($adresse)) { $error["adresse"] = "Adresse est requis!"; }
-    if (empty($numero)) { $error["numero"] = "Numero de telephone est requis!"; }
-    if (empty($domaine)) { $error["domaine"] = "Domaine de l'association est requis!"; }
-    
+    if (empty($name)) {
+        $errors["name"] = "nom de l'association est requis!";
+    }
+    if (empty($email)) {
+        $error["email"] = "Email est requis!";
+    }
+    if (empty($mdps)) {
+        $error["mdps"] = "Mot de passe est requis!";
+    }
+    if (empty($confirmotdepasse)) {
+        $error["confirmotdepasse"] = "Veuillez confirmer le mot de passe!";
+    }
+    if (empty($info)) {
+        $error["info"] = "Description est requis!";
+    }
+    if (empty($adresse)) {
+        $error["adresse"] = "Adresse est requis!";
+    }
+    if (empty($numero)) {
+        $error["numero"] = "Numero de telephone est requis!";
+    }
+    if (empty($domaine)) {
+        $error["domaine"] = "Domaine de l'association est requis!";
+    }
+
     if (empty(array_filter($errors))) {
         $hash = password_hash($mdps, PASSWORD_DEFAULT);
         $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, false)");
@@ -57,6 +73,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':numero' => $numero,
             ':domaine' => $domaine,
         ]);
+
+        // Handle file upload
+        if (isset($_FILES['preuve']) && $_FILES['preuve']['error'] == UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['preuve']['tmp_name'];
+            $fileName = $_FILES['preuve']['name'];
+            $fileSize = $_FILES['preuve']['size'];
+            $fileType = $_FILES['preuve']['type'];
+
+            // Define the upload directory
+            $uploadDir = 'uploads/';
+            $dest_path = $uploadDir . basename($fileName);
+            // Check if the file is an image or a video
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4'];
+            if (in_array($fileType, $allowedTypes)) {
+                // Move the file to the upload directory
+                if (move_uploaded_file($fileTmpPath, $dest_path)) {
+                    // File successfully uploaded
+                    $sql = $conn->prepare("INSERT INTO document_justificatif (NOM_IMAGE, DATE_CREATION, ID_ASSOCIATION) VALUES (:media_url, NOW(), LAST_INSERT_ID())");
+                    $sql->execute([':media_url' => "/uploads/" . basename($fileName)]);
+                } else {
+                    echo "Error moving the uploaded file.";
+                    exit();
+                }
+            } else {
+                echo "Invalid file type. Only images and videos are allowed.";
+                exit();
+            }
+        }
+
         header('location:connexion.php');
     }
 }
@@ -104,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="information">
-                <form method="post" class="form-group">
+                <form method="post" class="form-group" enctype="multipart/form-data">
                     <!-- Nom de l'association -->
                     <label for="nom">Nom de l'association</label>
                     <div class="form-error"><?= $errors["name"] ?></div>

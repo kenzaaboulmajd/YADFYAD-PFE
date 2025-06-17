@@ -3,17 +3,23 @@ session_start();
 require_once "config.php";
 
 $email = $_SESSION["email"];
+
+$isAssociation = false;
+$isAssociationMember = false;
 $publications = [];
 
-$sql = $pdo->prepare("SELECT * FROM association WHERE EMAIL = :email");
+
+$sql = $pdo->prepare("SELECT * FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
 $sql->execute([":email" => $email]);
 
 $association = $sql->fetch();
+$isAssociationMember = (bool) $sql->rowCount();
 
 $sql = $pdo->prepare("SELECT publication.*, association.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls, GROUP_CONCAT(liker.ID_UTILISATEUR SEPARATOR ',') AS utilisateur_likers, GROUP_CONCAT(liker.ID_ASSOCIATION SEPARATOR ',') AS association_likers FROM publication LEFT JOIN association ON publication.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB WHERE publication.ID_ASSOCIATION = :id_association GROUP BY publication.ID_PUB ORDER BY publication.DATE_CREATION DESC");
 $sql->execute([":id_association" => $association["ID_ASSOCIATION"]]);
 
 $publications = $sql->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
