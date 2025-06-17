@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "config.php";
+require_once "includes/comments-helper.php";
 
 $email = $_SESSION["email"];
 
@@ -9,13 +10,29 @@ $isAssociationMember = false;
 $publications = [];
 
 
-$sql = $pdo->prepare("SELECT * FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
+$sql = $pdo->prepare("SELECT utilisateur.*, association.*, association.EMAIL AS EMAIL_ASSOCIATION FROM utilisateur INNER JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE utilisateur.EMAIL = :email");
 $sql->execute([":email" => $email]);
 
 $association = $sql->fetch();
 $isAssociationMember = (bool) $sql->rowCount();
 
-$sql = $pdo->prepare("SELECT publication.*, association.*, GROUP_CONCAT(medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls, GROUP_CONCAT(liker.ID_UTILISATEUR SEPARATOR ',') AS utilisateur_likers, GROUP_CONCAT(liker.ID_ASSOCIATION SEPARATOR ',') AS association_likers FROM publication LEFT JOIN association ON publication.ID_ASSOCIATION = association.ID_ASSOCIATION LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB WHERE publication.ID_ASSOCIATION = :id_association GROUP BY publication.ID_PUB ORDER BY publication.DATE_CREATION DESC");
+$sql = $pdo->prepare("
+    SELECT
+        publication.*,
+        association.*,
+        GROUP_CONCAT(DISTINCT medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls,
+        GROUP_CONCAT(DISTINCT liker.ID_UTILISATEUR SEPARATOR ',') AS utilisateur_likers,
+        GROUP_CONCAT(DISTINCT liker.ID_ASSOCIATION SEPARATOR ',') AS association_likers,
+        COUNT(DISTINCT commenter.ID_COMMENTER) AS comments_count
+    FROM publication
+    LEFT JOIN association ON publication.ID_ASSOCIATION = association.ID_ASSOCIATION
+    LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB
+    LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB
+    LEFT JOIN commenter ON publication.ID_PUB = commenter.ID_PUB
+    WHERE publication.ID_ASSOCIATION = :id_association
+    GROUP BY publication.ID_PUB
+    ORDER BY publication.DATE_CREATION DESC
+");
 $sql->execute([":id_association" => $association["ID_ASSOCIATION"]]);
 
 $publications = $sql->fetchAll();
@@ -36,6 +53,7 @@ $publications = $sql->fetchAll();
     <link rel="stylesheet" href="assets/styles/style.css">
     <link rel="stylesheet" href="profile-association.css">
     <link rel="stylesheet" href="actualite.css">
+    <link rel="stylesheet" href="assets/styles/comments.css">
 </head>
 
 <body>
@@ -143,7 +161,10 @@ $publications = $sql->fetchAll();
                         <div class="post-container">
 
                             <div class="post-header">
-                                <div class="post-icone"></div>
+                                <div class="post-icone">
+                                    <img src="<?= $publication["PHOTO"] ? "http://localhost/YADFYAD-PFE" . $publication["PHOTO"] : "https://assets.procurement.opengov.com/assets/unknown-business-logo.png" ?>"
+                                        alt="">
+                                </div>
                                 <div class="post-header-contenu">
                                     <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
                                     <div class="post-date">
@@ -220,16 +241,22 @@ $publications = $sql->fetchAll();
                                         </div>
                                     </div>
                                     <div class="post-interaction-element">
-                                        <div class="icone"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        <div class="icone comment-toggle" data-publication="<?= $publication["ID_PUB"] ?>">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
                                                 class="lucide lucide-message-circle-icon lucide-message-circle">
                                                 <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
                                             </svg>
                                         </div>
-                                        <div class="valeur">12</div>
+                                        <div class="valeur"><?= $publication["comments_count"] ?></div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Comments Section -->
+                            <div class="post-comments" id="comments-<?= $publication["ID_PUB"] ?>" style="display: none;">
+                                <?= renderCommentsSection($pdo, $publication["ID_PUB"], $_SESSION, 3) ?>
                             </div>
                         </div>
 
@@ -253,7 +280,7 @@ $publications = $sql->fetchAll();
                                 <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
                                 <rect x="2" y="4" width="20" height="16" rx="2" />
                             </svg></div>
-                        <div class="contact-value">ismailpipas@gmail.com</div>
+                        <div class="contact-value"><?= $association["EMAIL_ASSOCIATION"] ?></div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -263,7 +290,7 @@ $publications = $sql->fetchAll();
                                 <path
                                     d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" />
                             </svg></div>
-                        <div class="contact-value">+212602233638</div>
+                        <div class="contact-value"><?= $association["NUMERO_TELEPHONE"] ?></div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -274,7 +301,7 @@ $publications = $sql->fetchAll();
                                 <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
                                 <path d="M2 12h20" />
                             </svg></div>
-                        <div class="contact-value">www.facebook.com</div>
+                        <div class="contact-value"><?= $association["SITEWEB"] ?></div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -285,7 +312,7 @@ $publications = $sql->fetchAll();
                                     d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg></div>
-                        <div class="contact-value">Agadir, Maroc</div>
+                        <div class="contact-value"><?= $association["ADRESSE"] ?></div>
                     </div>
                 </div>
             </div>

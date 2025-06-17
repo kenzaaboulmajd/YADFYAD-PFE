@@ -11,6 +11,7 @@ $errors = array(
     "adresse" => "",
     "numero" => "",
     "domaine" => "",
+    "siteweb" => "",
 );
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmotdepasse = $_POST['confirmotdepasse'];
     $info = $_POST['info'];
     $domaine = $_POST['domaine'];
+    $siteweb = $_POST['siteweb'];
 
 
 
@@ -60,10 +62,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($domaine)) {
         $error["domaine"] = "Domaine de l'association est requis!";
     }
+    if (empty($siteweb)) {
+        $error["siteweb"] = "Siteweb de l'association est requis!";
+    }
 
     if (empty(array_filter($errors))) {
         $hash = password_hash($mdps, PASSWORD_DEFAULT);
-        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, false)");
+        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE, SITEWEB) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, FALSE, :siteweb)");
         $sql->execute([
             ':nom' => $name,
             ':email' => $email,
@@ -72,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ':adresse' => $adresse,
             ':numero' => $numero,
             ':domaine' => $domaine,
+            ':siteweb' => $siteweb,
         ]);
 
         // Handle file upload
@@ -176,6 +182,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="numero">Numero de téléphone</label>
                     <div class="form-error"><?= $errors["numero"] ?></div>
                     <input type="text" id="numero" name="numero" required>
+
+                    <!-- Siteweb -->
+                    <label for="siteweb">Siteweb</label>
+                    <div class="form-error"><?= $errors["siteweb"] ?></div>
+                    <input type="url" id="siteweb" name="siteweb" required>
 
                     <!-- Mot de passe -->
                     <label for="motdepasse">Mot de passe</label>

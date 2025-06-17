@@ -1,0 +1,402 @@
+/* Comments Section Styles - Updated to match platform colors */
+:root {
+    --mainColor: #0048A6;
+    --lightMainColor: #0048A680;
+    --buttonColor: #267CF4;
+    --lightGrey: #71717aaf;
+    --backgoundcolor: #f1f5f9;
+    --textColor: #000000;
+    --experienceColor: #9333EA;
+    --bgExperience: #f3e8ff;
+    --problemeColor: #dc2626;
+    --bgProbleme: #fee2e2;
+    --activiteColor: #16a34a;
+    --bgActivite: #dcfce7;
+    --greenColor: #059669;
+    --bgGreen: #0596686d;
+}
+
+.post-comments {
+    margin-top: 15px;
+    border-top: 1px solid var(--lightGrey);
+    padding-top: 15px;
+    background-color: var(--backgoundcolor);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.comments-section {
+    width: 100%;
+}
+
+.comments-header {
+    margin-bottom: 15px;
+}
+
+.comments-header h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--textColor);
+    margin: 0;
+}
+
+/* Comment Form Styles */
+.comment-form {
+    margin-bottom: 20px;
+}
+
+.comment-input-container {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.comment-input {
+    flex: 1;
+    min-height: 40px;
+    max-height: 120px;
+    padding: 10px 12px;
+    border: 1px solid var(--lightGrey);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s ease;
+    background-color: white;
+    color: var(--textColor);
+}
+
+.comment-input:focus {
+    outline: none;
+    border-color: var(--mainColor);
+    box-shadow: 0 0 0 3px var(--lightMainColor);
+}
+
+.comment-input::placeholder {
+    color: var(--lightGrey);
+}
+
+.comment-submit-btn {
+    padding: 10px 16px;
+    background-color: var(--buttonColor);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+}
+
+.comment-submit-btn:hover {
+    background-color: var(--mainColor);
+}
+
+.comment-submit-btn:disabled {
+    background-color: var(--lightGrey);
+    cursor: not-allowed;
+}
+
+/* Comments List Styles */
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comment-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    border: 1px solid var(--lightGrey);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-avatar {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+}
+
+.comment-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.default-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--mainColor);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--textColor);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.comment-author:hover {
+    color: var(--mainColor);
+}
+
+.comment-date {
+    color: var(--lightGrey);
+    font-size: 12px;
+}
+
+.comment-delete-btn {
+    background: none;
+    border: none;
+    color: var(--problemeColor);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 2px 4px;
+    border-radius: 4px;
+    margin-left: auto;
+    transition: background-color 0.2s ease;
+}
+
+.comment-delete-btn:hover {
+    background-color: var(--bgProbleme);
+}
+
+.comment-text {
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.comment-text a {
+    color: var(--buttonColor);
+    text-decoration: none;
+}
+
+.comment-text a:hover {
+    text-decoration: underline;
+}
+
+/* Load More Comments */
+.comments-load-more {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.load-more-comments-btn {
+    background: none;
+    border: 1px solid var(--lightGrey);
+    color: var(--lightGrey);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.load-more-comments-btn:hover {
+    background-color: var(--backgoundcolor);
+    border-color: var(--mainColor);
+    color: var(--textColor);
+}
+
+/* Comment Toggle Button */
+.comment-toggle {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.comment-toggle:hover {
+    color: var(--mainColor);
+}
+
+/* Loading States */
+.comment-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: var(--lightGrey);
+    font-size: 14px;
+}
+
+.comment-error {
+    padding: 12px;
+    background-color: var(--bgProbleme);
+    border: 1px solid var(--problemeColor);
+    border-radius: 6px;
+    color: var(--problemeColor);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Empty State */
+.comments-empty {
+    text-align: center;
+    padding: 20px;
+    color: var(--lightGrey);
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .comment-input-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .comment-submit-btn {
+        align-self: flex-end;
+        width: auto;
+    }
+    
+    .comment-item {
+        padding: 10px;
+    }
+    
+    .comment-avatar {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .default-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+    
+    .comment-header {
+        gap: 6px;
+    }
+    
+    .comment-author {
+        font-size: 13px;
+    }
+    
+    .comment-date {
+        font-size: 11px;
+    }
+    
+    .comment-text {
+        font-size: 13px;
+    }
+}
+
+/* Animation for new comments */
+@keyframes slideInComment {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.comment-item.new-comment {
+    animation: slideInComment 0.3s ease-out;
+}
+
+/* Character counter for comment input */
+.comment-input-wrapper {
+    position: relative;
+}
+
+.comment-char-counter {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-size: 12px;
+    color: var(--lightGrey);
+}
+
+.comment-char-counter.warning {
+    color: var(--activiteColor);
+}
+
+.comment-char-counter.error {
+    color: var(--problemeColor);
+}
+
+/* Comment Messages */
+.comment-message {
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.comment-success {
+    background-color: var(--bgActivite);
+    border: 1px solid var(--activiteColor);
+    color: var(--activiteColor);
+}
+
+.comment-error {
+    background-color: var(--bgProbleme);
+    border: 1px solid var(--problemeColor);
+    color: var(--problemeColor);
+}
+
+/* Hover effects for interactive elements */
+.post-interaction-element:hover .comment-toggle {
+    transform: scale(1.1);
+    transition: transform 0.2s ease;
+}
+
+/* Focus states for accessibility */
+.comment-input:focus,
+.comment-submit-btn:focus,
+.load-more-comments-btn:focus {
+    outline: 2px solid var(--mainColor);
+    outline-offset: 2px;
+}
+
+/* Additional platform-specific styles */
+.comment-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Ensure comments blend well with existing post styles */
+.post .post-comments {
+    margin-top: 0;
+    border-top: 1px solid var(--lightGrey);
+}
+
+/* Match the platform's interaction element styling */
+.post-interaction-element .comment-toggle {
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.post-interaction-element .comment-toggle:hover {
+    background-color: var(--backgoundcolor);
+}
