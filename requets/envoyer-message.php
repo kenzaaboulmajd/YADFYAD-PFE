@@ -4,31 +4,21 @@ require_once "../config.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $contenu = $_POST["contenu"];
-  $type_expediteur = $_POST["type_expediteur"];
   $type_destinataire = $_POST["type_destinataire"];
   $id_destinataire = $_POST["id_destinataire"];
 
-  if ($type_expediteur === "UTILISATEUR") {
-    $email = $_SESSION["email"];
-    $stmt = $pdo->prepare("SELECT ID_UTILISATEUR FROM utilisateur WHERE EMAIL = :email");
-    $stmt->execute([":email" => $email]);
-    $exp = $stmt->fetch();
-    $id_expediteur = $exp["ID_UTILISATEUR"];
+  $sql = $pdo->prepare("INSERT INTO message (MESSAGE, EXPEDITEUR_ID, DESTINATAIRE_ID, DESTINATAIRE_TYPE, EXPEDITEUR_TYPE, DATE_CREATION) VALUES (:message, :expediteur_id, :destinataire_id, :destinataire_type, :expediteur_type, NOW())");
+  $sql->execute([
+    ":message" => $contenu,
+    ":expediteur_id" => $_SESSION["type"] === "UTILISATEUR" ? $_SESSION["id_utilisateur"] : $_SESSION["id_association"],
+    ":destinataire_id" => $id_destinataire,
+    ":destinataire_type" => $type_destinataire,
+    ":expediteur_type" => ctype_upper($_SESSION["type"])
+  ]);
 
-    $query = $pdo->prepare("
-            INSERT INTO message (CONTENU, ID_EXPEDITEUR_UTILISATEUR, ID_DESTINATAIRE_UTILISATEUR, ID_DESTINATAIRE_ASSOCIATION, DATE_ENVOI)
-            VALUES (:contenu, :id_exp, :id_dest_user, :id_dest_asso, now())
-        ");
-    $query->execute([
-      ":contenu" => $contenu,
-      ":id_exp" => $id_expediteur,
-      ":id_dest_user" => $type_destinataire === "UTILISATEUR" ? $id_destinataire : null,
-      ":id_dest_asso" => $type_destinataire === "ASSOCIATION" ? $id_destinataire : null
-    ]);
-  }
+  $stmt = $pdo->prepare("SELECT * FROM message WHERE (EXPEDITEUR_ID = :exp AND DESTINATAIRE_ID = :dest) OR (EXPEDITEUR_ID = :dest AND DESTINATAIRE_ID = :exp) ORDER BY DATE_CREATION DESC LIMIT 1");
+  $stmt->execute([':exp' => $_SESSION["type"] == 'UTILISATEUR' ? $_SESSION['id_utilisateur'] : $_SESSION['id_association'], ':dest' => $id_destinataire]);
+  $message = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // même logique si c’est une association qui envoie le message...
-  // (tu peux ajouter ça selon ton système de session)
-
-  echo json_encode(["success" => true]);
+  echo json_encode(["success" => true, "message" => $message["MESSAGE"], "time" => $message["DATE_CREATION"]]);
 }

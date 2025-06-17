@@ -159,12 +159,12 @@ li.message .time {
   color: #aaa;
 }
 
-li.message.sent {
+li.message.received {
   align-self: flex-start;
   background: #f1f1f1;
 }
 
-li.message.received {
+li.message.sent {
   align-self: flex-end;
   background: #059669;
   color: white;

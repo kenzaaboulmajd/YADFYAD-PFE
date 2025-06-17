@@ -36,6 +36,31 @@ const likePublication = async (publication_id) => {
   return data;
 };
 
+const envoyerMessage = async (
+  contenu,
+  destinataireId,
+  typeDestinataire = "ASSOCIATION"
+) => {
+  const urlencoded = new URLSearchParams();
+  urlencoded.append("contenu", contenu);
+  urlencoded.append("id_destinataire", destinataireId);
+  urlencoded.append("type_expediteur", "UTILISATEUR"); // ou "ASSOCIATION"
+  urlencoded.append("type_destinataire", typeDestinataire);
+
+  const response = await fetch(BASE_URL + "/requets/envoyer-message.php", {
+    method: "POST",
+    body: urlencoded,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  if (!response.ok) return;
+
+  const data = await response.json();
+  return data;
+};
+
 const followButtons = document.querySelectorAll(".follow");
 followButtons.forEach((followButton) =>
   followButton.addEventListener("click", async () => {
@@ -71,3 +96,36 @@ likeButtons.forEach((likeButton) =>
     }
   })
 );
+
+const messageButton = document.querySelector(".send-message");
+const messagesContainer = document.querySelector(".chat-messages>ul");
+messageButton?.addEventListener("click", async () => {
+  const contenu = messageButton.previousElementSibling.value;
+  const destinataireId = messageButton.dataset.destinataire;
+  const typeDestinataire = messageButton.dataset.typeDestinataire;
+
+  if (!contenu || !destinataireId) return;
+
+  const response = await envoyerMessage(
+    contenu,
+    destinataireId,
+    typeDestinataire
+  );
+
+  if (response.success) {
+    const newMessage = document.createElement("li");
+    newMessage.classList.add("message");
+    newMessage.classList.add("sent");
+
+    const date = new Date(response.time);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const time = `${hours}:${minutes}`;
+
+    newMessage.innerHTML = `<p>${response.message}</p><div class="time">${time}</div>`;
+    messagesContainer.appendChild(newMessage);
+    messageButton.previousElementSibling.value = "";
+  } else {
+    alert("Erreur lors de l'envoi du message.");
+  }
+});
