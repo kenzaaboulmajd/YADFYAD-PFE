@@ -72,6 +72,43 @@ header nav .icons ul{
     justify-content: end;
     gap:20px;
 }
+header nav .icons ul li{
+    position: relative;
+}
+
+header nav .icons ul li .notifications{
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    width: 300px;
+    z-index: 999;
+    background-color: white;
+    border-radius: 7px;
+    border: 1px solid #6b7280;
+    display: none;
+}
+header nav .icons ul li .notifications.active {
+    display: block;
+}
+header nav .icons ul li .notifications .notifications-header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+}
+header nav .icons ul li .notifications .notification-element {
+    padding: 15px 20px;
+}
+header nav .icons ul li .notifications .notification-element:not(:last-child) {
+    border-bottom: 1px solid grey;
+}
+header nav .icons ul li .notifications .notification-element:hover {
+    background-color: #ddd;
+}
+header nav .icons ul li .notifications .notification-element .notification-time {
+    color: #999;
+    font-size: 14px;
+    text-align: right;
+}
 nav .icone {
     display: block;
     position: absolute;

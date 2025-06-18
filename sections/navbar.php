@@ -1,3 +1,13 @@
+<?php
+if ($_SESSION["type"] == "association") {
+    $sql = $pdo->prepare("SELECT * FROM notification WHERE ID_UTILISATEUR = :id_utilisateur ORDER BY DATE_CREATION DESC");
+    $sql->execute([
+        ":id_utilisateur" => $_SESSION["id_association"]
+    ]);
+    $notifications = $sql->fetchAll();
+}
+?>
+
 <header>
     <div class="container">
         <nav>
@@ -19,13 +29,26 @@
                                 class="lucide lucide-message-square-icon lucide-message-square">
                                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                             </svg></a></li>
-                    <li><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-bell-icon lucide-bell">
+                    <li><a href="#" class="notifications-trigger"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-bell-icon lucide-bell">
                                 <path d="M10.268 21a2 2 0 0 0 3.464 0" />
                                 <path
                                     d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
-                            </svg></a></li>
+                            </svg></a>
+                        <div class="notifications">
+                            <div class="notifications-header">Notifications</div>
+                            <?php foreach ($notifications as $notification): ?>
+                                <div class="notification-element">
+                                    <div class="notification-content"><?= $notification["MESSAGE"] ?></div>
+                                    <div class="notification-time">
+                                        <?= date("d M Y, H:i", strtotime($notification["DATE_CREATION"])) ?>
+                                    </div>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
+                    </li>
                     <li><a
                             href="<?php echo $_SESSION["type"] == "utilisateur" ? "profile-membre.php" : "profile-association.php"; ?>"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"

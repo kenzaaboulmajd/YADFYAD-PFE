@@ -60,5 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $likes = $sql->fetch();
     $likesCount = $sql->rowCount();
 
+    require_once "../includes/notifications-helper.php";
+    if ($is_liking)
+        creer_notification(($_SESSION["type"] == "utilisateur" ? $utilisateur["PRENOM"] . " " . $utilisateur["NOM"] : $association["NOM_ASSOCIATION"]) . " a aimé votre publication.", "LIKE", "", "ASSOCIATION", $likes["ID_ASSOCIATION"]);
+
     echo json_encode(["is_liking" => $is_liking, "count" => $likesCount]);
 }

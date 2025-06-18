@@ -16,7 +16,7 @@ $sql->execute([":id_association" => $id_association, ":id_utilisateur" => $utili
 $suivis = $sql->fetch();
 $is_following = (bool) $sql->rowCount();
 
-$sql = $pdo->prepare("SELECT association.*, utilisateur.*, association.EMAIL AS EMAIL_ASSOCIATION, association.SITEWEB AS SITEWEB_ASSOCIATION FROM association INNER JOIN utilisateur ON association.ID_ASSOCIATION = utilisateur.ID_ASSOCIATION WHERE association.ID_ASSOCIATION = :id_association");
+$sql = $pdo->prepare("SELECT association.*, utilisateur.*, association.EMAIL AS EMAIL_ASSOCIATION, association.SITEWEB AS SITEWEB_ASSOCIATION FROM association LEFT JOIN utilisateur ON association.ID_ASSOCIATION = utilisateur.ID_ASSOCIATION WHERE association.ID_ASSOCIATION = :id_association");
 $sql->execute([":id_association" => $id_association]);
 
 $association = $sql->fetch();
@@ -224,9 +224,9 @@ if ($sql->rowCount()) {
             </div>
             <div class="about tab" data-tab="about">
                 <div class="about-titre">Description</div>
-                <div class="about-text"><?= $publication["INFO"] ?></div>
+                <div class="about-text"><?= $association["INFO"] ?></div>
                 <div class="about-soustitre">Domaine d'activités</div>
-                <div class="about-text"><?= $publication["DOMAINE"] ?></div>
+                <div class="about-text"><?= $association["DOMAINE"] ?></div>
             </div>
             <div class="contact tab" data-tab="contact">
                 <div class="contact-titre">Informations de contact</div>
