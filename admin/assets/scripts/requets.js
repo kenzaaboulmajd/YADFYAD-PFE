@@ -1,4 +1,4 @@
-const url_de_base = "http://localhost/kenza_pfe/admin";
+const url_de_base = "http://localhost/YADFYAD-PFE/admin";
 
 // verifier les associations
 const verifierAssociation = async (association_id) => {

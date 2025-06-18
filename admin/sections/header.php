@@ -11,6 +11,7 @@
           stroke="#020817" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
-    <button class="btn btn-outline">Retour au site</button>
+   
+    <a href="http://localhost/YADFYAD-PFe/actualite.php"> <button class="btn btn-outline">Retour au site</button></a>
   </div>
 </div>
