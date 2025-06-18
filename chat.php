@@ -4,7 +4,7 @@ require_once "config.php";
 
 $dest_id = $_GET['id_dest'] ?? null;
 $dest_type = $_GET['type_dest'] ?? null;
-$id = $_SESSION["type"] == 'UTILISATEUR' ? $_SESSION['id_utilisateur'] : $_SESSION['id_association'];
+$id = $_SESSION["type"] == 'utilisateur' ? $_SESSION['id_utilisateur'] : $_SESSION['id_association'];
 
 $messages = [];
 $dest_info = [];
@@ -25,8 +25,8 @@ if ($dest_id && $dest_type) {
   $messages = $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
-$sql = $pdo->prepare("SELECT * FROM association WHERE VERIFIE = true");
-$sql->execute();
+$sql = $pdo->prepare("SELECT * FROM association WHERE NOT ID_ASSOCIATION = :id_association");
+$sql->execute([":id_association" => $_SESSION["type"] == 'association' ? $_SESSION["id_association"] : 0]);
 $associations = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($associations as $key => $association) {
@@ -80,7 +80,9 @@ foreach ($associations as $key => $association) {
               <a href="chat.php?id_dest=<?php echo $association['ID_ASSOCIATION']; ?>&type_dest=ASSOCIATION">
                 <div class="contenu-message">
                   <div class="profile">
-                    <div class="avatare"></div>
+                    <img
+                      src="<?= $association["PHOTO"] ? "http://localhost/YADFYAD-PFE" . $association["PHOTO"] : "https://assets.procurement.opengov.com/assets/unknown-business-logo.png" ?>"
+                      alt="">
                   </div>
                   <div class="resume">
                     <div class="nom-user"><?php echo htmlspecialchars($association['NOM_ASSOCIATION']); ?></div>

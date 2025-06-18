@@ -89,10 +89,18 @@ p, h2{
   height: 40px;
   border-radius: 50%;
   background: #bbb;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 .resume {
-  flex-grow: 1;
+  flex: 1;
 }
 
 .nom-user {
