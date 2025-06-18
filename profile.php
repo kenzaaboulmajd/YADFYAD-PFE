@@ -12,7 +12,7 @@ $sql->execute([":email" => $_SESSION["email"]]);
 $utilisateur = $sql->fetch();
 
 $sql = $pdo->prepare("SELECT * FROM suivi WHERE ID_ASSOCIATION = :id_association AND ID_UTILISATEUR = :id_utilisateur");
-$sql->execute([":id_association" => $id_association, ":id_utilisateur" => $utilisateur["ID_UTILISATEUR"]]);
+$sql->execute([":id_association" => $id_association, ":id_utilisateur" => $utilisateur["ID_UTILISATEUR"] ?? "0"]);
 $suivis = $sql->fetch();
 $is_following = (bool) $sql->rowCount();
 
@@ -26,13 +26,11 @@ if ($sql->rowCount()) {
         SELECT
             publication.*,
             association.*,
-            utilisateur.*,
             GROUP_CONCAT(DISTINCT medias_url.NOM_MEDIA SEPARATOR ',') AS media_urls,
             GROUP_CONCAT(DISTINCT liker.ID_UTILISATEUR SEPARATOR ',') AS likers,
             COUNT(DISTINCT commenter.ID_COMMENTER) AS comments_count
         FROM publication
-        INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR
-        LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION
+        LEFT JOIN association ON publication.ID_ASSOCIATION = association.ID_ASSOCIATION
         LEFT JOIN medias_url ON publication.ID_PUB = medias_url.ID_PUB
         LEFT JOIN liker ON publication.ID_PUB = liker.ID_PUB
         LEFT JOIN commenter ON publication.ID_PUB = commenter.ID_PUB
@@ -40,7 +38,7 @@ if ($sql->rowCount()) {
         GROUP BY publication.ID_PUB
         ORDER BY publication.DATE_CREATION DESC
     ");
-    $sql->execute([":id_association" => $association["ID_ASSOCIATION"]]);
+    $sql->execute([":id_association" => $id_association]);
 
     $publications = $sql->fetchAll();
 }
@@ -86,18 +84,20 @@ if ($sql->rowCount()) {
                             <circle cx="12" cy="10" r="3" />
                         </svg><?= $association["ADRESSE"] ?></div>
                 </div>
-                <div class="bouttons">
-                    <!-- <label for="publication">Nouvelle publication :</label> -->
+                <?php if ($_SESSION["type"] == "utilisateur"): ?>
+                    <div class="bouttons">
+                        <!-- <label for="publication">Nouvelle publication :</label> -->
 
-                    <a class="follow <?= $is_following ? "following" : "" ?>"
-                        data-association="<?= $id_association ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-heart-icon lucide-heart">
-                            <path
-                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-                        </svg><span class="follow-status"><?= $is_following ? "Suivi(e)" : "Suivre" ?></span></a>
-                </div>
+                        <a class="follow <?= $is_following ? "following" : "" ?>"
+                            data-association="<?= $id_association ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart-icon lucide-heart">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                            </svg><span class="follow-status"><?= $is_following ? "Suivi(e)" : "Suivre" ?></span></a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="nombre">
                 <div class="abonnes"><span style="color:green;">0</span> Abonnés</div>

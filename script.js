@@ -70,3 +70,13 @@ notificationTriggerButtons.forEach((trigger) => {
       : trigger.nextElementSibling.classList.add("active");
   });
 });
+
+function toggleFields(element) {
+  console.log(element.value);
+  const assocMemberFields = document.querySelectorAll(
+    ".association-membre-champs"
+  );
+  assocMemberFields.forEach((field) => {
+    field.style.display = element.value == "membre" ? "block" : "none";
+  });
+}

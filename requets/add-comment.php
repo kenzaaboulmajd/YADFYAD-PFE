@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    $publication_id = (int)$_POST["publication_id"];
+    $publication_id = (int) $_POST["publication_id"];
     $contenu = trim($_POST["contenu"]);
     $user_email = $_SESSION["email"];
     $user_type = $_SESSION["type"];
@@ -25,37 +25,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Get user information based on type
         if ($user_type == "association") {
-            $sql = $pdo->prepare("SELECT ID_ASSOCIATION FROM association WHERE EMAIL = :email");
+            $sql = $pdo->prepare("SELECT ID_ASSOCIATION, NOM_ASSOCIATION FROM association WHERE EMAIL = :email");
             $sql->execute([":email" => $user_email]);
             $user_data = $sql->fetch();
-            
+
             if (!$user_data) {
                 http_response_code(401);
                 echo json_encode(["success" => false, "message" => "Association non trouvée"]);
                 exit;
             }
-            
+
             $user_id = $user_data["ID_ASSOCIATION"];
             $type_utilisateur = "ASSOCIATION";
         } else {
-            $sql = $pdo->prepare("SELECT ID_UTILISATEUR FROM utilisateur WHERE EMAIL = :email");
+            $sql = $pdo->prepare("SELECT ID_UTILISATEUR, NOM FROM utilisateur WHERE EMAIL = :email");
             $sql->execute([":email" => $user_email]);
             $user_data = $sql->fetch();
-            
+
             if (!$user_data) {
                 http_response_code(401);
                 echo json_encode(["success" => false, "message" => "Utilisateur non trouvé"]);
                 exit;
             }
-            
+
             $user_id = $user_data["ID_UTILISATEUR"];
             $type_utilisateur = "UTILISATEUR";
         }
 
         // Verify publication exists
-        $sql = $pdo->prepare("SELECT ID_PUB FROM publication WHERE ID_PUB = :id_pub");
+        $sql = $pdo->prepare("SELECT ID_PUB, ID_ASSOCIATION FROM publication WHERE ID_PUB = :id_pub");
         $sql->execute([":id_pub" => $publication_id]);
-        if (!$sql->fetch()) {
+        $publication = $sql->fetch();
+        if (!$publication) {
             http_response_code(404);
             echo json_encode(["success" => false, "message" => "Publication non trouvée"]);
             exit;
@@ -71,6 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         ]);
 
         $comment_id = $pdo->lastInsertId();
+
+        require_once("../includes/notifications-helper.php");
+        creer_notification(($user_data["NOM_ASSOCIATION"] ?? ($user_data["PRENOM"] . $user_data["NOM"])) . " a ajouter un commentaire a votre publication", "COMMENTAIRE", "", "ASSOCIATION", $publication["ID_ASSOCIATION"]);
 
         // Get the newly created comment with user information
         if ($type_utilisateur == "ASSOCIATION") {
@@ -88,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 WHERE c.ID_COMMENTER = :comment_id
             ");
         }
-        
+
         $sql->execute([":comment_id" => $comment_id]);
         $comment = $sql->fetch();
 

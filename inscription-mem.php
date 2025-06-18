@@ -1,22 +1,29 @@
 <?php
 session_start();
-ini_set('display_errors', 'on');
+require_once "config.php";
+
+$sql = $pdo->prepare("SELECT ID_ASSOCIATION, NOM_ASSOCIATION FROM association");
+$sql->execute();
+$associations = $sql->fetchAll();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db = "mysql:host=localhost;dbname=yadfyad";
     $user = "root";
     $pass = "";
     $fullname = $_POST["nom"];
     $nom = explode(" ", $fullname)[0];
-    $prenom = explode(" ", $fullname)[1];
+    $prenom = explode(" ", $fullname)[1] ?? "";
     $email = $_POST['email'];
     $mdps = $_POST['mdps'];
     $confirmotdepasse = $_POST['confirmotdepasse'];
     $description = $_POST['description'];
     $role = $_POST['role'];
-    if ($role == "membre-association") {
-        $type = 0;
-    } else {
+    $association_id = $_POST["association"];
+
+    if ($role == "membre") {
         $type = 1;
+    } else {
+        $type = 0;
     }
     try {
         $conn = new PDO($db, $user, $pass);
@@ -24,16 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } catch (PDOException $e) {
         echo 'error de cnx' . $e->getMessage();
     }
-    if (!empty($nom) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description) && !empty($prenom)) {
+    if (!empty($nom) && !empty($email) && !empty($mdps) && !empty($confirmotdepasse) && !empty($description)) {
         $hash = password_hash($mdps, PASSWORD_DEFAULT);
-        $sql = $conn->prepare("INSERT INTO utilisateur (NOM,PRENOM,EMAIL, MOT_DE_PASSE, DESCRIPTION,TYPE_UTILISATEUR) VALUES (:nom,:prenom, :email, :mdps,:description,:type_utilisateur)");
+        $sql = $conn->prepare("INSERT INTO utilisateur (NOM,PRENOM,EMAIL, MOT_DE_PASSE, DESCRIPTION,TYPE_UTILISATEUR,ID_ASSOCIATION) VALUES (:nom,:prenom, :email, :mdps,:description,:type_utilisateur,:id_association)");
         $sql->execute([
             ':nom' => $nom,
             ':prenom' => $prenom,
             ':email' => $email,
             ':mdps' => $hash,
             ':description' => $description,
-            ':type_utilisateur' => $type
+            ':type_utilisateur' => $type,
+            ':id_association' => $association_id
         ]);
         header('location:connexion.php');
     } else {
@@ -63,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class=" container">
             <nav>
                 <div class="logo">
-                    <img src="assets/images/logo.png" alt="YADFYAD-logo">
+                    <a href="/YADFYAD-PFE"><img src="assets/images/logo.png" alt="YADFYAD-logo"></a>
             </nav>
         </div>
     </header>
@@ -85,10 +93,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form method="post" class="form-group">
 
                     <label for="role">Je suis :</label>
-                    <select name="role" id="role" class="role" onchange="toggleFields()" required>
-                        <option value="">Choisissez...</option>
-                        <option value="autre">Membre d'association</option>
-                        <option value="association">visiteur</option>
+                    <select name="role" id="role" class="role" onchange="toggleFields(this)" required>
+                        <option value="" disabled hidden selected>Choisissez...</option>
+                        <option value="membre">Membre d'association</option>
+                        <option value="visiteur">visiteur</option>
+                    </select>
+
+                    <label class="association-membre-champs" for="association" style="display: none;">Membre de
+                        :</label>
+                    <select class="role association-membre-champs" name="association" id="association"
+                        style="display: none">
+                        <option value="" disabled hidden selected>Choisissez...</option>
+                        <?php foreach ($associations as $association): ?>
+                            <option value="<?= $association["ID_ASSOCIATION"] ?>"><?= $association["NOM_ASSOCIATION"] ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
 
                     <label for=" nom">Nom et prenom</label>
@@ -122,6 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>

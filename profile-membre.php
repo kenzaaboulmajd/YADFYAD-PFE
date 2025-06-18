@@ -71,6 +71,7 @@ $publications = $sql->fetchAll();
                 </form>
                 <div class="script-profil">
                     <h2><?= $association["NOM_ASSOCIATION"] ?></h2>
+                    <div>Membre association (<?= $association["PRENOM"] . " " . $association["NOM"] ?>)</div>
                     <p><?= $association["INFO"] ?></p>
                     <div class="lieu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"

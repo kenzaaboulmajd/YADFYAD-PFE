@@ -31,7 +31,7 @@ $associations = $sql->fetchAll()
             </div>
 
             <!-- Search Section -->
-            <div class="search-section">
+            <!-- <div class="search-section">
                 <div class="search-container">
                     <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -40,7 +40,7 @@ $associations = $sql->fetchAll()
                     <input type="search" class="search-input"
                         placeholder="Rechercher des associations ou des publications..." id="searchInput">
                 </div>
-            </div>
+            </div> -->
 
             <!-- Associations Tab -->
             <div class="tab-content active" id="associations">
@@ -48,15 +48,19 @@ $associations = $sql->fetchAll()
                     <?php foreach ($associations as $association): ?>
                         <div class="card association-card">
                             <div class="card-content">
-                                <div class="avatar avatar-large"></div>
+                                <div class="avatar avatar-large">
+                                    <img src="<?= $association["PHOTO"] ? "http://localhost/YADFYAD-PFE" . $association["PHOTO"] : "https://assets.procurement.opengov.com/assets/unknown-business-logo.png" ?>"
+                                        alt="">
+                                </div>
                                 <h3 class="card-title"><?= $association["NOM_ASSOCIATION"] ?></h3>
                                 <p class="card-description"><?= $association["INFO"] ?></p>
-                                <button class="btn btn-outline">
-                                    <svg class="action-icon" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                    </svg>
-                                    Voir le profil
-                                </button>
+                                <a href="profile.php?id=<?= $association["ID_ASSOCIATION"] ?>"><button
+                                        class="btn btn-outline">
+                                        <svg class="action-icon" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        Voir le profile
+                                    </button></a>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -66,7 +70,7 @@ $associations = $sql->fetchAll()
 
         <!-- Load More Button -->
         <div class="load-more">
-            <button class="btn btn-outline" onclick="loadMoreAssociations()">Charger plus</button>
+            <!-- <button class="btn btn-outline" onclick="loadMoreAssociations()">Charger plus</button> -->
         </div>
         </div>
     </section>

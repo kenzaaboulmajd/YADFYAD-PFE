@@ -16,7 +16,7 @@ if ($_SESSION["type"] == "association") {
             </div>
             <div class="link">
                 <ul>
-                    <li><a href="http://localhost/YADFYAD-PFE/actualite.php">Accueil</a></li>
+                    <li><a href="http://localhost/YADFYAD-PFE/actualite.php">Actualités</a></li>
                     <li><a href="http://localhost/YADFYAD-PFE/associations.php">Associations</a></li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@ if ($_SESSION["type"] == "association") {
                         </div>
                     </li>
                     <li><a
-                            href="<?php echo $_SESSION["type"] == "utilisateur" ? "profile-membre.php" : "profile-association.php"; ?>"><svg
+                            href="<?php echo $_SESSION["type"] == "utilisateur" && $_SESSION["est_visiteur"] ? "profile-normal.php" : ($_SESSION["type"] == "association" ? "profile-association.php" : "profile-membre.php"); ?>"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
@@ -114,7 +114,7 @@ if ($_SESSION["type"] == "association") {
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                 </svg> Message</a></li>
                         <li><a
-                                href="<?php echo $_SESSION["type"] == "utilisateur" ? "profile-membre.php" : "profile-association.php"; ?>"><svg
+                                href=""<?php echo $_SESSION["type"] == "utilisateur" ? "profile-membre.php" : ($_SESSION["type"] == "association" ? "profile-association.php" : "profile-normal.php"); ?>""><svg
                                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">

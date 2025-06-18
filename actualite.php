@@ -45,7 +45,7 @@ $publications = $sql->fetchAll();
     <section>
         <div class="container">
             <div class="header-actualite">
-                <div class="links-tous">
+                <!-- <div class="links-tous">
                     <ul>
                         <li> <a href="#">Tous</a></li>
                         <li> <a href="#">Problèmes</a></li>
@@ -56,7 +56,7 @@ $publications = $sql->fetchAll();
                 <div class="recherche">
                     <input type="text" placeholder="Rechercher...">
 
-                </div>
+                </div> -->
             </div>
             <div class="posts">
                 <?php foreach ($publications as $publication): ?>
@@ -64,7 +64,10 @@ $publications = $sql->fetchAll();
                         <div class="post-container">
 
                             <div class="post-header">
-                                <div class="post-icone"></div>
+                                <div class="post-icone">
+                                    <img src="<?= $publication["PHOTO"] ? "http://localhost/YADFYAD-PFE" . $publication["PHOTO"] : "https://assets.procurement.opengov.com/assets/unknown-business-logo.png" ?>"
+                                        alt="">
+                                </div>
                                 <div class="post-header-contenu">
                                     <a href="profile.php?id=<?= $publication["ID_ASSOCIATION"] ?>"
                                         class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></a>
@@ -92,7 +95,7 @@ $publications = $sql->fetchAll();
                             <div class="post-contenu">
                                 <div class="post-titre"><?= $publication["TITRE"] ?></div>
                                 <div class="post-description"><?= $publication["DISCRIPTION"] ?></div>
-                                <?php if ($publication["media_urls"]): ?>
+                                <?php if (!empty($publication["media_urls"])): ?>
                                     <div class="post-image">
                                         <img src="http://localhost/YADFYAD-PFE<?= explode(",", $publication["media_urls"])[0] ?>"
                                             alt="">

@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $_SESSION["email"] = $users["EMAIL"];
             $_SESSION["type"] = "utilisateur";
             $_SESSION["id_utilisateur"] = $users["ID_UTILISATEUR"];
+            $_SESSION["est_visiteur"] = !(bool) $users["TYPE_UTILISATEUR"];
             header("location:actualite.php");
         }
     } else {
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class=" container">
             <nav>
                 <div class="logo">
-                    <img src="assets/images/logo.png" alt="YADFYAD-logo">
+                    <a href="/YADFYAD-PFE"><img src="assets/images/logo.png" alt="YADFYAD-logo"></a>
             </nav>
         </div>
     </header>

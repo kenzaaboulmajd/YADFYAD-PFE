@@ -44,6 +44,13 @@ a{
     height: 200px;
     border-radius: 50%;
     background-color: var(--lightGrey);
+    position: relative;
+    overflow: hidden;
+}
+.photo-profil img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 .script-profil{
   width: 700px;
