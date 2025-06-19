@@ -107,7 +107,9 @@
             <div class="landing-posts">
                 <div class="post">
                     <div class="post-header">
-                        <div class="avatar"></div>
+                        <div class="avatar">
+                            <img src="assets/images/Capture_decran_2025-06-19_a_02.52.50.png" alt="">
+                        </div>
                         <div class="post-header-content">
                             <div class="post-header-name">Associations nationales reconnues d’utilité publique</div>
                             <div class="post-header-time">il y a 2 jours</div>
@@ -140,7 +142,9 @@
                 </div>
                 <div class="post">
                     <div class="post-header">
-                        <div class="avatar"></div>
+                        <div class="avatar">
+                            <img src="assets/images/Capture_decran_2025-06-19_a_02.52.40.png" alt="">
+                        </div>
                         <div class="post-header-content">
                             <div class="post-header-name">Transparency Maroc</div>
                             <div class="post-header-time">il y a 2 jours</div>
@@ -174,7 +178,9 @@
                 </div>
                 <div class="post">
                     <div class="post-header">
-                        <div class="avatar"></div>
+                        <div class="avatar">
+                            <img src="assets/images/Capture_decran_2025-06-19_a_02.52.31.png" alt="">
+                        </div>
                         <div class="post-header-content">
                             <div class="post-header-name">Structures de soutien au secteur associatif</div>
                             <div class="post-header-time">il y a 2 jours</div>
@@ -207,7 +213,9 @@
                 </div>
                 <div class="post">
                     <div class="post-header">
-                        <div class="avatar"></div>
+                        <div class="avatar">
+                            <img src="assets/images/Capture_decran_2025-06-19_a_02.52.25.png" alt="">
+                        </div>
                         <div class="post-header-content">
                             <div class="post-header-name">Targa-Aide</div>
                             <div class="post-header-time">il y a 2 jours</div>
@@ -254,28 +262,34 @@
             </div>
             <div class="slides">
                 <div class="photo-profil">
-                    <div class="avatar"><img src="https://placehold.co/100" alt="profile"></div>
+                    <div class="avatar">
+                        <img src="assets/images/Capture_decran_2025-06-19_a_02.52.50.png" alt="">
+                    </div>
                     <span>Espace Associatif</span>
                 </div>
                 <div class="photo-profil">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+                        <img src="assets/images/Capture_decran_2025-06-19_a_02.52.40.png" alt="">
+                    </div>
                     <span>Transparency Maroc</span>
                 </div>
                 <div class="photo-profil">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+                        <img src="assets/images/Capture_decran_2025-06-19_a_02.52.31.png" alt="">
+                    </div>
                     <span>Transparency Maroc</span>
                 </div>
                 <div class="photo-profil">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+                        <img src="assets/images/Capture_decran_2025-06-19_a_02.52.25.png" alt="">
+                    </div>
                     <span>Targa-Aide</span>
                 </div>
                 <div class="photo-profil">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+                        <img src="assets/images/images.jpeg" alt="">
+                    </div>
                     <span>SOS Villages d’Enfants Maroc</span>
-                </div>
-                <div class="photo-profil">
-                    <div class="avatar"></div>
-                    <span>Chantiers Sociaux Marocains</span>
                 </div>
             </div>
         </div>
