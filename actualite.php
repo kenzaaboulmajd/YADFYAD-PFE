@@ -26,6 +26,7 @@ $sql = $pdo->prepare("
 $sql->execute();
 
 $publications = $sql->fetchAll();
+
 ?>
 
 <!DOCTYPE html>

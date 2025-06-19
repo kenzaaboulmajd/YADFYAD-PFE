@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             required>
 
           <!-- Numéro -->
-          <label for="description">Numero de téléphone</label>
+          <label for="description">Description</label>
           <input type="text" id="numero" name="description" value="<?= $utilisateur["DESCRIPTION"] ?>" required>
 
           <input type="submit" value="Modifier">
