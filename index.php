@@ -109,14 +109,13 @@
                     <div class="post-header">
                         <div class="avatar"></div>
                         <div class="post-header-content">
-                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-name">Associations nationales reconnues d’utilité publique</div>
                             <div class="post-header-time">il y a 2 jours</div>
 
                         </div>
                     </div>
                     <div class="description">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                            odit eius nam eligendi.
+                        <p>Associations nationales reconnues d’utilité publique.
                         </p>
                     </div>
                     <div class="icone">
@@ -143,14 +142,14 @@
                     <div class="post-header">
                         <div class="avatar"></div>
                         <div class="post-header-content">
-                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-name">Transparency Maroc</div>
                             <div class="post-header-time">il y a 2 jours</div>
 
                         </div>
                     </div>
                     <div class="description">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                            odit eius nam eligendi.
+                        <p>Œuvre dans la lutte contre la corruption : rapports annuels et alertes via un service de
+                            dénonciation (Fès, Rabat.
                         </p>
                     </div>
                     <div class="icone">
@@ -177,14 +176,13 @@
                     <div class="post-header">
                         <div class="avatar"></div>
                         <div class="post-header-content">
-                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-name">Structures de soutien au secteur associatif</div>
                             <div class="post-header-time">il y a 2 jours</div>
 
                         </div>
                     </div>
                     <div class="description">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                            odit eius nam eligendi.
+                        <p>Joue un rôle d’intermédiaire entre la société civile et les autorités.
                         </p>
                     </div>
                     <div class="icone">
@@ -211,14 +209,14 @@
                     <div class="post-header">
                         <div class="avatar"></div>
                         <div class="post-header-content">
-                            <div class="post-header-name">kolna me3a ismail baalouk</div>
+                            <div class="post-header-name">Targa-Aide</div>
                             <div class="post-header-time">il y a 2 jours</div>
 
                         </div>
                     </div>
                     <div class="description">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore
-                            odit eius nam eligendi.
+                        <p>LAssociation créée en 1998 pour le développement durable, réduction des inégalités et gestion
+                            de l’eau dans le Haut‑Atlas.
                         </p>
                     </div>
                     <div class="icone">
@@ -257,27 +255,27 @@
             <div class="slides">
                 <div class="photo-profil">
                     <div class="avatar"><img src="https://placehold.co/100" alt="profile"></div>
-                    <span>association</span>
+                    <span>Espace Associatif</span>
                 </div>
                 <div class="photo-profil">
                     <div class="avatar"></div>
-                    <span>association</span>
+                    <span>Transparency Maroc</span>
                 </div>
                 <div class="photo-profil">
                     <div class="avatar"></div>
-                    <span>association</span>
+                    <span>Transparency Maroc</span>
                 </div>
                 <div class="photo-profil">
                     <div class="avatar"></div>
-                    <span>association</span>
+                    <span>Targa-Aide</span>
                 </div>
                 <div class="photo-profil">
                     <div class="avatar"></div>
-                    <span>association</span>
+                    <span>SOS Villages d’Enfants Maroc</span>
                 </div>
                 <div class="photo-profil">
                     <div class="avatar"></div>
-                    <span>association</span>
+                    <span>Chantiers Sociaux Marocains</span>
                 </div>
             </div>
         </div>
