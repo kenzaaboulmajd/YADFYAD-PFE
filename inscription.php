@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty(array_filter($errors))) {
         $hash = password_hash($mdps, PASSWORD_DEFAULT);
-        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE, SITEWEB) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, FALSE, :siteweb)");
+        $sql = $conn->prepare("INSERT INTO association (NOM_ASSOCIATION,EMAIL, MOT_DE_PASSE, INFO,ADRESSE, NUMERO_TELEPHONE, DOMAINE, VERIFIE, SITEWEB, DATE_CREATION) VALUES (:nom, :email, :mdps,:info,:adresse,:numero,:domaine, FALSE, :siteweb, NOW())");
         $sql->execute([
             ':nom' => $name,
             ':email' => $email,

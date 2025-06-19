@@ -107,7 +107,7 @@ if ($sql->rowCount()) {
                 <ul class="links association-profile-tabs-triggers">
                     <!-- javascript -->
                     <li class="tab-trigger active" data-tab="publications">Publications</li>
-                    <li class="tab-trigger" data-tab="about">About</li>
+                    <li class="tab-trigger" data-tab="about">A propos</li>
                     <li class="tab-trigger" data-tab="contact">Contact</li>
                 </ul>
             </div>

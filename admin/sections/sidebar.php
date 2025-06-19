@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once "database/connexion.php";
+
+$sql = $pdo->prepare("SELECT * FROM admin WHERE ID_ADMIN = :id_admin");
+$sql->execute(["id_admin" => $_SESSION["id_admin"]]);
+$admin = $sql->fetch();
+?>
+
 <div class="sidebar">
   <div class="logo">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,8 +109,8 @@
   <div class="profile">
     <div class="avatar"></div>
     <div class="profile-content">
-      <div class="name">Admin YADFYAD</div>
-      <div class="email">admin@tadamouni.org</div>
+      <div class="name">Admin</div>
+      <div class="email"><?= $admin["EMAIL"]; ?></div>
     </div>
   </div>
 </div>

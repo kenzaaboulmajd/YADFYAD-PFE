@@ -140,7 +140,7 @@ $publications = $sql->fetchAll();
                 <ul class="links association-profile-tabs-triggers">
                     <!-- javascript -->
                     <li class="tab-trigger active" data-tab="publications">Publications</li>
-                    <li class="tab-trigger" data-tab="about">About</li>
+                    <li class="tab-trigger" data-tab="about">A propos</li>
                     <li class="tab-trigger" data-tab="contact">Contact</li>
                 </ul>
             </div>
@@ -162,7 +162,7 @@ $publications = $sql->fetchAll();
                                 <div class="post-header-contenu">
                                     <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
                                     <div class="post-date">
-                                        <?= date("d M Y, H:i", $publication["DATE_CREATION"]); ?>
+                                        <?= $publication["DATE_EVENEMENT_ACTIVITE"] ? date("d M Y", strtotime($publication["DATE_EVENEMENT_ACTIVITE"])) : "" ?>
                                     </div>
                                 </div>
                                 <div class="post-type <?= str_replace(["è", "é"], "e", $publication["TYPE_PUB"]) ?>"><svg

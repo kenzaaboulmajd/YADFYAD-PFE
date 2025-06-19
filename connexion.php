@@ -46,9 +46,26 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 header("location:actualite.php");
             }
         } else {
-            $error = "email ou mot de passe incorrect";
-        }
+            $sql = $conn->prepare("SELECT * FROM admin WHERE EMAIL=:email");
+            $sql->execute([
+                ':email' => $email
+            ]);
+            $admin = $sql->fetch(PDO::FETCH_ASSOC);
+            $adminCount = $sql->rowCount();
 
+            if ($adminCount) {
+                if (password_verify($mdps, $admin["MOT_DE_PASSE"])) {
+                    $_SESSION["email"] = $admin["EMAIL"];
+                    $_SESSION["type"] = "association";
+                    $_SESSION["id_admin"] = $admin["ID_ADMIN"];
+
+                    header("location:admin");
+                }
+            } else {
+                $error = "email ou mot de passe incorrect";
+            }
+
+        }
     }
 }
 ?>

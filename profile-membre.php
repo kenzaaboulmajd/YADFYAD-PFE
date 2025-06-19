@@ -169,7 +169,7 @@ $publications = $sql->fetchAll();
                                 <div class="post-header-contenu">
                                     <div class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></div>
                                     <div class="post-date">
-                                        <?= date("d M Y, H:i", $publication["DATE_CREATION"]); ?>
+                                        <?= date("d M Y", strtotime($publication["DATE_EVENEMENT_ACTIVITE"])) ?>
                                     </div>
                                 </div>
                                 <div class="post-type <?= str_replace(["è", "é"], "e", $publication["TYPE_PUB"]) ?>"><svg

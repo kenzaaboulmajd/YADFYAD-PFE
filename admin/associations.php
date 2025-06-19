@@ -71,7 +71,7 @@ $associations = $associationsStmt->fetchAll(PDO::FETCH_ASSOC);
                   <th class="card-table-header">Association</th>
                   <th class="card-table-header">Date d'inscription</th>
                   <th class="card-table-header">Staut</th>
-                  <th class="card-table-header">Publications</th>
+                  <!-- <th class="card-table-header">Publications</th> -->
                   <th class="card-table-header">Actions</th>
                 </tr>
                 <?php foreach ($associations as $association): ?>
@@ -89,7 +89,7 @@ $associations = $associationsStmt->fetchAll(PDO::FETCH_ASSOC);
                       <span
                         class="card-table-badge <?= $association["VERIFIE"] ? "" : "card-table-badge-danger" ?>"><?= $association["VERIFIE"] ? "Vérifiée" : "Non vérfiée" ?></span>
                     </td>
-                    <td class="card-table-cell">0</td>
+                    <!-- <td class="card-table-cell">0</td> -->
                     <td class="card-table-cell">
                       <div class="card-table-actions">
                         <div class="dropdown">

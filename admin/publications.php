@@ -14,7 +14,7 @@ $publicationsCount = $publicationsCountStmt->fetch(PDO::FETCH_ASSOC)["publicatio
 $pagesCountCalculationResult = (int) ceil($publicationsCount / $limit);
 $pagesCount = $pagesCountCalculationResult > 0 ? (int) $pagesCountCalculationResult : 1;
 
-$publicationsStmt = $pdo->prepare("SELECT publication.*, utilisateur.*, association.* FROM publication INNER JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE TITRE LIKE \"%$query%\" LIMIT $limit OFFSET $offset");
+$publicationsStmt = $pdo->prepare("SELECT publication.*, utilisateur.*, association.*, publication.DATE_CREATION AS publicationCreation FROM publication LEFT JOIN utilisateur ON publication.ID_UTILISATEUR = utilisateur.ID_UTILISATEUR LEFT JOIN association ON utilisateur.ID_ASSOCIATION = association.ID_ASSOCIATION WHERE TITRE LIKE \"%$query%\" LIMIT $limit OFFSET $offset");
 $publicationsStmt->execute();
 $publications = $publicationsStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -73,7 +73,7 @@ $publications = $publicationsStmt->fetchAll(PDO::FETCH_ASSOC);
                   <th class="card-table-header">Association</th>
                   <th class="card-table-header">Date</th>
                   <th class="card-table-header">Statut</th>
-                  <th class="card-table-header">Vues</th>
+                  <!-- <th class="card-table-header">Vues</th> -->
                   <th class="card-table-header">Actions</th>
                 </tr>
                 <?php foreach ($publications as $publication): ?>
@@ -88,11 +88,11 @@ $publications = $publicationsStmt->fetchAll(PDO::FETCH_ASSOC);
                         <span><?= $publication["NOM_ASSOCIATION"] ?></span>
                       </div>
                     </td>
-                    <td class="card-table-cell"><?= date('d/m/Y', strtotime($publication["DATE_CREATION"])); ?></td>
+                    <td class="card-table-cell"><?= date('d/m/Y', strtotime($publication["publicationCreation"])); ?></td>
                     <td class="card-table-cell">
                       <span class="card-table-badge">Publié</span>
                     </td>
-                    <td class="card-table-cell">0</td>
+                    <!-- <td class="card-table-cell">0</td> -->
                     <td class="card-table-cell">
                       <div class="card-table-actions">
                         <div class="dropdown">

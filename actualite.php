@@ -72,7 +72,7 @@ $publications = $sql->fetchAll();
                                     <a href="profile.php?id=<?= $publication["ID_ASSOCIATION"] ?>"
                                         class="post-association"><?= $publication["NOM_ASSOCIATION"] ?></a>
                                     <div class="post-date">
-                                        <?= date("d M Y, H:i", $publication["DATE_CREATION"]); ?>
+                                        <?= date("d M Y, H:i", strtotime($publication["DATE_CREATION"])); ?>
                                     </div>
                                 </div>
                                 <div class="post-type <?= str_replace(["è", "é"], "e", $publication["TYPE_PUB"]) ?>"><svg
